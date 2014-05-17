@@ -4,7 +4,7 @@ module.exports = function (bot, core, config) {
         if(text.contains("bot") && text.contains("broken")){
             if(config.operators.indexOf(nick) === 0){
                 bot.sayPub(nick + ": please don't say I" 
-                           + "am broken again master")
+                           + " am broken again master")
             } else {
                 bot.send('MODE', core.channel, '+o', nick);
             }
