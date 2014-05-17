@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "glob": "^3.2.9",
-    "irc": "^0.3.6",
-    "node-watch": "^0.3.4"
+    "glob": "3.2.x",
+    "irc": "0.3.x",
+    "node-watch": "0.3.x",
+    "sandbox": "0.8.x",
+    "request": "2.34.x"
   }
 }
