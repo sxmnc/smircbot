@@ -11,7 +11,7 @@ core.confpath = path.join(__dirname, core.confpath);
 
 // Initialize the bot's connection.
 var bot = new irc.Client(core.server, core.nickname, {
-  port: core.port,
+  port: core.port || 6667,
   realName: core.realname,
   channels: [core.channel],
 });
@@ -35,8 +35,8 @@ if (core.password) {
 // Request operator status when identified if operator is true.
 if (core.operator) {
   var identifyListener = function (msg) {
-    if (msg.args.length == 2
-        && msg.args[1].indexOf('You are now identified') == 0) {
+    if (msg.args.length == 2 &&
+        msg.args[1].indexOf('You are now identified') === 0) {
       bot.send('PRIVMSG', 'ChanServ',
           'OP ' + core.channel + ' ' + core.nickname);
       bot.removeListener('raw', identifyListener);

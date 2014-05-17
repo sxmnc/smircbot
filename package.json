@@ -8,5 +8,9 @@
     "node-watch": "0.3.x",
     "sandbox": "0.8.x",
     "request": "2.34.x"
+  },
+  "devDependencies": {
+    "grunt": "0.4.x",
+    "grunt-contrib-jshint": "0.10.x"
   }
 }

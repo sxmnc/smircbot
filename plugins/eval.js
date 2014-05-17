@@ -7,7 +7,7 @@ module.exports = function (bot, core, config) {
 
   var listener = function (nick, text, msg) {
     var handle = '$eval ';
-    if (text.indexOf(handle) == 0) {
+    if (text.indexOf(handle) === 0) {
       var code = text.substring(handle.length);
       sandbox.run(code, function (output) {
         var lines = output.result.split(/\r\n|\r|\n/).length;
@@ -26,10 +26,10 @@ module.exports = function (bot, core, config) {
         }
       });
     }
-  }
+  };
   bot.on('pub', listener);
 
   return function () {
     bot.removeListener('pub', listener);
   };
-}
+};

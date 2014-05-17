@@ -7,14 +7,14 @@
 module.exports = function (bot, core, config) {
 
   var listener = function (nick, text, msg) {
-    if (text.indexOf('$example') == 0) {
+    if (text.indexOf('$example') === 0) {
       bot.sayPub(config.whatShouldISay);
     }
-  }
+  };
   bot.on('pub', listener);
 
   // Return a destructor, will be called when plugin is unloaded (or reloaded)
   return function () {
     bot.removeListener('pub', listener);
   };
-}
+};
