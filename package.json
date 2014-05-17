@@ -1,0 +1,10 @@
+{
+  "name": "ircbot",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "glob": "^3.2.9",
+    "irc": "^0.3.6",
+    "node-watch": "^0.3.4"
+  }
+}
