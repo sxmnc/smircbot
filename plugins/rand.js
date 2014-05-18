@@ -5,7 +5,6 @@ module.exports = function (bot, core, config) {
 
   core.help.select = '$select words ...\n' +
       'Selects a random word in the list given as an argument.';
- 
 
   var listener = function (nick, text, msg) {
     var rollCmd = '$roll ';
