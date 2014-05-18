@@ -13,19 +13,25 @@ module.exports = function (bot, core, config) {
     if (text.indexOf(handle) === 0) {
       var code = text.substring(handle.length);
       sandbox.run(code, function (output) {
-        var lines = output.result.split(/\r\n|\r|\n/).length;
-        if (lines > 3 || output.result.length > 250) {
-          bot.sayPub(nick + ': Pasting ' + lines + ' lines to ix.io...');
-          request.post('http://ix.io?f:0=' + encodeURIComponent(output.result),
-            function (err, res, body) {
-              if (!err && res.statusCode == 200) {
-                bot.sayPub(nick + ': ' + body);
-              } else {
-                bot.sayPub(nick + ': There was an error while pasting.');
-              }
-            });
+        var result = output.result.toString();
+        if (result === 'TimeoutError') {
+          bot.send('KICK', core.channel, nick,
+            'Infinite loops are not my idea of fun.');
         } else {
-          bot.sayPub(nick + ': ' + output.result);
+          var lines = result.split(/\r\n|\r|\n/).length;
+          if (lines > 3 || result.length > 250) {
+            bot.sayPub(nick + ': Pasting ' + lines + ' lines to ix.io...');
+            request.post('http://ix.io?f:0=' + encodeURIComponent(result),
+              function (err, res, body) {
+                if (!err && res.statusCode == 200) {
+                  bot.sayPub(nick + ': ' + body);
+                } else {
+                  bot.sayPub(nick + ': There was an error while pasting.');
+                }
+              });
+          } else {
+            bot.sayPub(nick + ': ' + result);
+          }
         }
       });
     }
