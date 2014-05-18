@@ -14,7 +14,7 @@ module.exports = function (bot, core, config) {
       var code = text.substring(handle.length);
       sandbox.run(code, function (output) {
         var lines = output.result.split(/\r\n|\r|\n/).length;
-        if (lines > 3) {
+        if (lines > 3 || output.result.length > 250) {
           bot.sayPub(nick + ': Pasting ' + lines + ' lines to ix.io...');
           request.post('http://ix.io?f:0=' + encodeURIComponent(output.result),
             function (err, res, body) {
