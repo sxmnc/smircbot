@@ -1,9 +1,11 @@
 {
-  "operators": [
+  "admins": [
     "alxgnon",
     "SBSTP",
     "Kiniamar0",
     "kiniamaro",
-    "DrFoliberg"
-  ]
+    "DrFoliberg",
+    "MrJudgemental"
+  ],
+  "logger": "smlogger"
 }
