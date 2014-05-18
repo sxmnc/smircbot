@@ -1,7 +1,7 @@
 module.exports = function (bot, core, config) {
 
   var listener = function (nick, text, msg) {
-    if (text.indexOf('$reqop') === 0) {
+    if (text === '$reqop') {
       if (config.operators.indexOf(nick) === -1) {
         bot.sayPub(nick + ': Permission denied.');
       } else {
