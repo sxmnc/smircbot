@@ -5,6 +5,7 @@ var fs = require('fs');
 var irc = require('irc');
 
 var core = require('./core.json');
+core.help = {};
 
 core.basepath = path.join(__dirname, core.basepath);
 core.confpath = path.join(__dirname, core.confpath);

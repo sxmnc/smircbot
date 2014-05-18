@@ -5,6 +5,9 @@ var sandbox = new Sandbox();
 
 module.exports = function (bot, core, config) {
 
+  core.help.eval = '$eval js\n' +
+      'Executes a JavaScript expression and prints the result.';
+
   var listener = function (nick, text, msg) {
     var handle = '$eval ';
     if (text.indexOf(handle) === 0) {
