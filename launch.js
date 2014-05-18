@@ -17,6 +17,12 @@ var bot = new irc.Client(core.server, core.nickname, {
   channels: [core.channel],
 });
 
+if (core.debug) {
+  bot.on('raw', function (msg) {
+    console.log(msg.command, msg.args);
+  });
+}
+
 // Shorthand method to say messages on the bot's own server.
 bot.sayPub = function (msg) {
   this.say(core.channel, msg);
