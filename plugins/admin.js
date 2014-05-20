@@ -34,7 +34,7 @@ module.exports = function (bot, core, config) {
     if (text === '$fixperm') {
       checkPerm(nick, function () {
         var namesListener = function (nicks) {
-          for (nick in nicks) {
+          for (var nick in nicks) {
             if (nick !== core.nickname && nicks[nick] === '@') {
               bot.send('MODE', core.channel, '-o', nick);
             }

@@ -16,7 +16,7 @@ module.exports = function (bot, core, config) {
         bot.sayPub(nick + ': $roll sides');
       } else {
         var result = Math.floor(Math.random() * sides) + 1;
-        bot.sayPub(nick + ': rolled ' + result + '!')
+        bot.sayPub(nick + ': rolled ' + result + '!');
       }
 
     } else if (text.indexOf(selectCmd) === 0) {
@@ -28,7 +28,7 @@ module.exports = function (bot, core, config) {
         }
       });
       var index = Math.floor(Math.random() * words.length);
-      bot.sayPub(nick + ': selected ' + words[index] + '!')
+      bot.sayPub(nick + ': selected ' + words[index] + '!');
     }
   };
   bot.on('pub', listener);
