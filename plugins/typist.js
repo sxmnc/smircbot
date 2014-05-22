@@ -40,7 +40,7 @@ module.exports = function (bot, core, config) {
     }
   }
 
-  setInterval(function () {
+  var typistLoop = setInterval(function () {
     if (playing && !playPhase) {
       timer++;
       if (timer === 15) {
@@ -137,5 +137,6 @@ module.exports = function (bot, core, config) {
 
   return function () {
     bot.removeListener('pub', listener);
+    clearInterval(typistLoop);
   };
 };
