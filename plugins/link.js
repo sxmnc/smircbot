@@ -8,9 +8,9 @@ module.exports = function (bot, core, config) {
     if (match) {
       var url = match[0];
       request.get(url, function (err, res, body) {
-        if (!err && res.statusCode == 200) {
+        if (!err && res.statusCode === 200) {
           var result = /<title>(.+)<\/title>/.exec(body);
-          if (result && result.length == 2 && result[1]) {
+          if (result && result.length === 2 && result[1]) {
             bot.sayPub('link: ' + entities.decodeHTML(result[1]));
           }
         }

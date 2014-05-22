@@ -42,7 +42,7 @@ if (core.password) {
 // Request operator status when identified if operator is true.
 if (core.operator) {
   var identifyListener = function (msg) {
-    if (msg.args.length == 2 &&
+    if (msg.args.length === 2 &&
         msg.args[1].indexOf('You are now identified') === 0) {
       bot.send('PRIVMSG', 'ChanServ',
           'OP ' + core.channel + ' ' + core.nickname);
