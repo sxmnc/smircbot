@@ -47,7 +47,7 @@ module.exports = function (bot, core, config) {
           bot.send('MODE', core.channel, '+v', config.logger);
         }
       });
-      
+
     } else if (text.indexOf('$kick ') === 0) {
       var kickee = text.substring('$kick '.length);
       checkPerm(nick, function () {
@@ -71,7 +71,7 @@ module.exports = function (bot, core, config) {
     //  });
     // } else if (text === '$deop') {
     //   bot.send('MODE', core.channel, '-o', nick);
-    // 
+    //
     // } else if (text.indexOf('$deop ') === 0) {
     //   var deopee = text.substring('$deop '.length);
     //   checkPerm(nick, function () {
