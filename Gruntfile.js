@@ -45,17 +45,11 @@ module.exports = function (grunt) {
           afterConsequent: true,
           beforeAlternate: true,
         },
-        requireSpacesInFunctionExpression: {
-          beforeOpeningCurlyBrace: true,
-        },
         requireSpacesInAnonymousFunctionExpression: {
           beforeOpeningRoundBrace: true,
         },
         disallowSpacesInNamedFunctionExpression: {
           beforeOpeningRoundBrace: true,
-        },
-        requireSpacesInFunctionDeclaration: {
-          beforeOpeningCurlyBrace: true,
         },
         disallowSpacesInFunctionDeclaration: {
           beforeOpeningRoundBrace: true,
@@ -68,20 +62,18 @@ module.exports = function (grunt) {
         disallowDanglingUnderscores: true,
         disallowSpaceAfterObjectKeys: true,
         requireCommaBeforeLineBreak: true,
-        disallowLeftStickedOperators: [
-          '?', '=', '+', '-', '/', '*', '==',
-          '===', '!=', '!==', '>', '>=', '<', '<=',
-        ],
-        disallowRightStickedOperators: [
-          '?', '=', '+', '/', '*', '==',
-          '===', '!=', '!==', '>', '>=', '<', '<=',
-        ],
-        requireRightStickedOperators: ['!'],
-        requireLeftStickedOperators: [','],
         disallowSpaceAfterPrefixUnaryOperators: [
           '++', '--', '+', '-', '~', '!',
         ],
         disallowSpaceBeforePostfixUnaryOperators: ['++', '--'],
+        requireSpaceBeforeBinaryOperators: [
+          '?', '=', '+', '-', '/', '*', '==',
+          '===', '!=', '!==', '>', '>=', '<', '<=',
+        ],
+        requireSpaceAfterBinaryOperators: [
+          '?', '=', '+', '-', '/', '*', '==',
+          '===', '!=', '!==', '>', '>=', '<', '<=',
+        ],
         requireCamelCaseOrUpperCaseIdentifiers: true,
         disallowKeywords: ['with'],
         validateLineBreaks: 'LF',
