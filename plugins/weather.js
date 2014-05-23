@@ -2,6 +2,8 @@ var request = require('request');
 
 module.exports = function (bot, core, config) {
 
+  core.help.weather = '$weather <location>';
+
   var regex = /^\$weather\s(.+)$/;
 
   var listener = function (nick, text, msg) {
