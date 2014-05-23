@@ -9,7 +9,6 @@
   "dependencies": {
     "glob": "3.2.x",
     "irc": "0.3.x",
-    "json5": "0.2.x",
     "lodash": "2.4.x",
     "node-watch": "0.3.x",
     "request": "2.34.x",
