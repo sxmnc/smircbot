@@ -1,3 +1,3 @@
 # smircbot
 
-The bot currently running on #SexManiac.
+The bot currently running on freenode.net#SexManiac.
