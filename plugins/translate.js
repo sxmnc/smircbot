@@ -2,7 +2,7 @@ var request = require('request');
 
 module.exports = function (bot, core, config) {
 
-  core.help.translate = "$translate (<target>|<source>-<target>) <text>";
+  core.help.translate = '$translate (<target>|<source>-<target>) <text>';
 
   var listener = function (nick, text, msg) {
     var match = text.match(/^\$translate\s(\w{2}\-?(\w{2})?)\s+(.+)$/i);
@@ -12,9 +12,9 @@ module.exports = function (bot, core, config) {
         qs: {
           key: config.translate.apiKey,
           lang: match[1],
-          text: match[3]
+          text: match[3],
         },
-        json: true
+        json: true,
       }, function (err, response, body) {
         if (!err) {
           if (body.code === 200) {
