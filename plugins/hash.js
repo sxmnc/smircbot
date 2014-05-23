@@ -13,16 +13,17 @@ module.exports = function (bot, core, config) {
     var match = text.match(/^\$hash\s(\S+)\s(.+)$/);
     if (match) {
       var algorithm = match[1];
-      var text = match[2].toLowerCase();
+      var input = match[2].toLowerCase();
 
       if (_.contains(algorithms, algorithm)) {
         try {
           var inst = crypto.createHash(algorithm);
-          inst.update(text, 'utf8');
+          inst.update(input, 'utf8');
           var hash = inst.digest('hex');
           bot.sayPub('[' + algorithm + '] -> ' + hash);
         } catch (e) {
-          bot.sayPub('[' + algorithm + '] does not support the digest method. wut?');
+          bot.sayPub('[' + algorithm +
+            '] does not support the digest method. wut?');
         }
       } else {
         bot.sayPub('Unknown algorithm "' + algorithm + '".');
