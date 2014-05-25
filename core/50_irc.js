@@ -20,6 +20,7 @@ module.exports = function (core) {
       channels: [core.channel],
     }
   );
+  core.irc.setMaxListeners(100);
 
   // Add a listener that removes itself on calling `done()`.
   core.irc.maybeOnce = function (type, listener) {
