@@ -1,25 +1,31 @@
 var entities = require('entities');
 var request = require('request');
 
-module.exports = function (bot, core, config) {
+module.exports = function (core) {
+  var plugin = {};
 
-  var listener = function (nick, text, msg) {
+  function pubListener(nick, text, msg) {
     var match = text.match(/\bhttps?:\/\/[^\s]+\b/g);
     if (match) {
       var url = match[0];
       request.get(url, function (err, res, body) {
         if (!err && res.statusCode === 200) {
-          var result = /<title>(.+)<\/title>/.exec(body);
+          var result = /<title>\s*(.+)\s*<\/title>/.exec(body);
           if (result && result.length === 2 && result[1]) {
-            bot.sayPub('link: ' + entities.decodeHTML(result[1]));
+            core.irc.sayFmt('link: %s', entities.decodeHTML(result[1]));
           }
         }
       });
     }
-  };
-  bot.on('pub', listener);
+  }
 
-  return function () {
-    bot.removeListener('pub', listener);
+  plugin.load = function () {
+    core.irc.on('pub', pubListener);
   };
+
+  plugin.unload = function () {
+    core.irc.removeListener('pub', pubListener);
+  };
+
+  return plugin;
 };

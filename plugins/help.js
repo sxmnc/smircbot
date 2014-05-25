@@ -1,23 +1,42 @@
-module.exports = function (bot, core, config) {
+var _ = require('lodash');
 
-  core.help.help = '$help topic\n' +
-      'Prints out help about a bot plugin or command.';
+var fmt = require('util').format;
 
-  var listener = function (nick, text, msg) {
-    var handle = '$help ';
-    if (text.indexOf(handle) === 0) {
-      var topic = text.substring(handle.length);
-      var help = core.help[topic];
-      if (help === undefined) {
-        bot.say(nick, 'help: No help found about "' + topic + '".');
+module.exports = function (core) {
+  var plugin = {};
+
+  plugin.help = {
+    help: '$help topic\n' +
+        'Prints out help about a bot plugin or command.',
+  };
+
+  function pubListener(nick, text, msg) {
+    var trigger = '$help ';
+
+    if (core.util.beginsIgnoreCase(text, trigger)) {
+      var topic = text.substring(trigger.length);
+      var help = null;
+      _.find(core.plugins, function (plugin) {
+        if (_.isObject(plugin.help) && plugin.help[topic]) {
+          help = plugin.help[topic];
+          return true;
+        }
+      });
+      if (help) {
+        core.irc.say(nick, fmt('help %s: %s', topic, help));
       } else {
-        bot.say(nick, 'help: ' + help);
+        core.irc.say(nick, fmt('help %s: No help found.', topic));
       }
     }
-  };
-  bot.on('pub', listener);
+  }
 
-  return function () {
-    bot.removeListener('pub', listener);
+  plugin.load = function () {
+    core.irc.on('pub', pubListener);
   };
+
+  plugin.unload = function () {
+    core.irc.removeListener('pub', pubListener);
+  };
+
+  return plugin;
 };

@@ -1,36 +1,46 @@
 var request = require('request');
 
-module.exports = function (bot, core, config) {
+module.exports = function (core) {
+  var plugin = {};
 
-  core.help.weather = '$weather <location>';
+  plugin.help = {
+    weather: '$weather city\n' +
+        'Shows weather information about the given city.',
+  };
 
   var regex = /^\$weather\s(.+)$/;
 
-  var listener = function (nick, text, msg) {
+  function pubListener(nick, text, msg) {
     var match = text.match(regex);
     if (match) {
-      var location = match[1];
+      var city = match[1];
       request({
         url: 'http://api.openweathermap.org/data/2.5/weather',
         qs: {
-          q: location,
+          q: city,
           units: 'metric',
-          id: config.weather.apiKey,
+          id: core.config.weatherApiKey,
         },
         json: true,
       }, function (err, response, body) {
         if (body.main) {
-          bot.sayPub('[' + location + ']: ' + Math.round(body.main.temp) +
-            '\u2103, ' + body.weather[0].description);
+          core.irc.sayFmt('[%s]: %s\u00b0C, %s',
+              city, Math.round(body.main.temp),
+              body.weather[0].description);
         } else {
-          bot.sayPub('City not found.');
+          core.irc.sayFmt('[%s]: City not found.', city);
         }
       });
     }
-  };
-  bot.on('pub', listener);
+  }
 
-  return function () {
-    bot.removeListener('pub', listener);
+  plugin.load = function () {
+    core.irc.on('pub', pubListener);
   };
+
+  plugin.unload = function () {
+    core.irc.removeListener('pub', pubListener);
+  };
+
+  return plugin;
 };

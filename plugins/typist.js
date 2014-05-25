@@ -1,9 +1,15 @@
-module.exports = function (bot, core, config) {
+var _ = require('lodash');
 
-  core.help.typist = '$typist\n' +
-      'Starts a typist game with "$typist start"\n' +
-      'type the sentence without errors before everyone else to win points\n' +
-      'type "$typist reset" to end the current game';
+module.exports = function (core) {
+  var plugin = {};
+
+  plugin.help = {
+    typist: '$typist\n' +
+        'Starts a typist game with "$typist start"\n' +
+        'type the sentence without errors before everyone ' +
+        'else to win points\n' +
+        'type "$typist reset" to end the current game',
+  };
 
   var startingLives = 2;
   var win = 6; // amount of lives you need to win
@@ -29,8 +35,8 @@ module.exports = function (bot, core, config) {
   }
 
   function setPhrase() {
-    var total = Object.keys(config.typist).length;
-    var phrase = config.typist[Math.floor(Math.random() * total)];
+    var total = core.config.typist.length;
+    var phrase = core.config.typist[_.random(total - 1)];
     return phrase;
   }
 
@@ -44,9 +50,10 @@ module.exports = function (bot, core, config) {
     if (playing && !playPhase) {
       timer++;
       if (timer === 15) {
-        bot.sayPub('15 seconds until the game starts');
+        core.irc.sayPub('15 seconds until the game starts');
       } else if (timer === 30) {
-        bot.sayPub('game is starting! joining closed, get ready to play!');
+        core.irc.sayPub(
+            'game is starting! joining closed, get ready to play!');
         joinPhase = false;
         setLives();
         playPhase = true;
@@ -54,89 +61,94 @@ module.exports = function (bot, core, config) {
       }
     } else if (playPhase && !writePhase) {
       if (timer === 0) {
-        bot.sayPub('Phrase in...');
+        core.irc.sayPub('Phrase in...');
         phrase = setPhrase();
         timer++;
       } else if (timer <= 3) {
-        bot.sayPub(3 - timer);
+        core.irc.sayPub(3 - timer);
         timer++;
       } else {
         writePhase = true;
-        bot.sayPub(phrase);
+        core.irc.sayPub(phrase);
       }
     }
   }, 1000);
 
-  var listener = function (nick, text, msg) {
-    var command = '$typist ';
+  function pubListener(nick, text, msg) {
+    var trigger = '$typist ';
 
-    if (text.indexOf(command) === 0) {
-      var arg = text.substring(command.length);
-      if (arg === 'start') {
+    if (core.util.beginsIgnoreCase(text, trigger)) {
+      var arg = text.substring(trigger.length);
+      if (core.util.eqIgnoreCase(arg, 'start')) {
         if (!playing) {
           playing = true;
           joinPhase = true;
           players.push(nick);
-          bot.sayPub('A game of typist has been started! type ' +
-              ' "$typist join" to join the game!');
+          core.irc.sayPub('A game of typist has been started! Type ' +
+              '"$typist join" to join the game!');
         } else {
-          bot.sayPub(nick + ': A game is already in progress, ' +
+          core.irc.sayPub(nick + ': A game is already in progress, ' +
               'type "$typist join", to join the game!');
         }
-      } else if (arg === 'join') {
+      } else if (core.util.eqIgnoreCase(arg, 'join')) {
         if (!playing) {
-          bot.sayPub(nick + ': no game in progress, ' +
-              'type "$typist start", to start a game');
+          core.irc.sayFmt('%s: no game in progress, ' +
+              'type "$typist start", to start a game', nick);
         } else if (!joinPhase) {
-          bot.sayPub(nick + ": it's too late to join!");
+          core.irc.sayFmt("%s: it's too late to join!", nick);
         } else {
-          if (players.indexOf(nick) !== -1) {
-            bot.sayPub(nick + ': you are already playing!');
+          if (_.contains(players, nick)) {
+            core.irc.sayFmt('%s: you are already playing!', nick);
           } else {
             players.push(nick);
-            bot.sayPub(nick + ': has been added to the game!');
+            core.irc.sayFmt('%s: has been added to the game!', nick);
           }
         }
-      } else if (arg === 'reset' || players.length === 0) {
+      } else if (core.util.eqIgnoreCase(arg, 'reset')) {
         reset();
-        bot.sayPub('game as been reset by : ' + nick);
+        core.irc.sayFmt('game has been reset by: %s', nick);
       }
     }
 
     if (writePhase) {
       if (text.indexOf(phrase) === 0 && players.indexOf(nick) !== -1) {
-        bot.sayPub(nick + ' wrote the phrase faster! + 1 life to him!');
+        core.irc.sayFmt('%s wrote the phrase faster! + 1 life to him!',
+            nick);
         lives[players.indexOf(nick)] += 1;
-        bot.sayPub(nick + ' is now at : ' +
-            lives[players.indexOf(nick)] + ' lives');
+        core.irc.sayFmt('%s is now at %s lives', nick,
+            lives[players.indexOf(nick)]);
         if (lives[players.indexOf(nick)] >= win) {
-          bot.sayPub(nick + ' Wins the game!');
+          core.irc.sayFmt('%s Wins the game!', nick);
           reset();
         }
         writePhase = false;
         timer = 0;
       } else if (players.indexOf(nick) !== -1) {
-        bot.sayPub(nick + ' : you are wrong! ' +
-            ' you lose 1 life!');
+        core.irc.sayFmt('%s: You are wrong! You lose 1 life!', nick);
         lives[players.indexOf(nick)] -= 1;
         if (lives[players.indexOf(nick)] <= 0) {
           players.splice(players.indexOf(nick), 1);
-          bot.sayPub(nick + ': you are dead!');
+          core.irc.sayFmt('%s: You are dead!', nick);
         } else {
-          bot.sayPub(nick + ': you have ' + lives[players.indexOf(nick)] +
-              ' live(s) left!');
+          core.irc.sayFmt('%s: You have %s live(s) left!', nick,
+              lives[players.indexOf(nick)]);
         }
       }
       if (players.length === 0) {
         reset();
-        bot.sayPub('every one is dead! no winner :(');
+        core.irc.sayPub('Everyone is dead! no winner :(');
       }
     }
-  };
-  bot.on('pub', listener);
+  }
 
-  return function () {
-    bot.removeListener('pub', listener);
+  plugin.load = function () {
+    core.irc.on('pub', pubListener);
+  };
+
+  plugin.unload = function () {
+    core.irc.removeListener('pub', pubListener);
     clearInterval(typistLoop);
   };
+
+  return plugin;
 };

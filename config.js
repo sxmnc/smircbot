@@ -1,16 +1,34 @@
-{
-  "admins": [
-    "alxgnon",
-    "SBSTP",
-    "Kiniamar0",
-    "kiniamaro",
-    "DrFoliberg",
-    "MrJudgemental",
-    "PetitPrince"
-  ],
-  "logger": "smlogger",
-  
-  "typist": [
+module.exports = {
+  core: {
+    server: 'irc.freenode.net',
+    port: 6667,
+    channel: '#SexManiac',
+
+    nickname: 'smircbot',
+    realname: '#SexManiac IRC bot',
+    password: '********',
+    operator: true,
+
+    debug: true,
+  },
+
+  translateApiKey: '********',
+  weatherApiKey: '********',
+
+  admin: {
+    logger: 'smlogger',
+    admins: [
+      'alxgnon',
+      'SBSTP',
+      'Kiniamar0',
+      'kiniamaro',
+      'DrFoliberg',
+      'MrJudgemental',
+      'PetitPrince',
+    ],
+  },
+
+  typist: [
     "the quick brown fox jumps over the lazy dog",
     "moonlight drowns out all but the brightest stars",
     "I want to be a healer, and love all things that grow and are not barren",
@@ -39,6 +57,6 @@
     "forget it, Jake, it's Chinatown",
     "open the pod bay doors please, HAL",
     "my precious",
-    "I'm the king of the world!" 
-  ]
-}
+    "I'm the king of the world!",
+  ],
+};

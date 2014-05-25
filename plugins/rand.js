@@ -1,39 +1,45 @@
-module.exports = function (bot, core, config) {
+var _ = require('lodash');
 
-  core.help.roll = '$roll sides\n' +
-      'Rolls a dice of the specified amount of sides.';
+module.exports = function (core) {
+  var plugin = {};
 
-  core.help.select = '$select words ...\n' +
-      'Selects a random word in the list given as an argument.';
+  plugin.help = {
+    roll: '$roll sides\n' +
+        'Rolls a dice of the specified amount of sides.',
+    select: '$select words ...\n' +
+        'Selects a random word in the list given as an argument.',
+  };
 
-  var listener = function (nick, text, msg) {
-    var rollCmd = '$roll ';
-    var selectCmd = '$select ';
+  function pubListener(nick, text, msg) {
+    var rollTrigger = '$roll ';
+    var selectTrigger = '$select ';
 
-    if (text.indexOf(rollCmd) === 0) {
-      var sides = parseInt(text.substring(rollCmd.length));
+    if (core.util.beginsIgnoreCase(text, rollTrigger)) {
+      var sides = parseInt(text.substring(rollTrigger.length));
       if (isNaN(sides) || sides < 2) {
-        bot.sayPub(nick + ': $roll sides');
+        core.irc.sayFmt('%s: $roll sides', nick);
       } else {
-        var result = Math.floor(Math.random() * sides) + 1;
-        bot.sayPub(nick + ': rolled ' + result + '!');
+        var result = _.random(1, sides);
+        core.irc.sayFmt('%s: rolled %s!', nick, result);
       }
 
-    } else if (text.indexOf(selectCmd) === 0) {
-      var rawWords = text.substring(selectCmd.length).split(' ');
-      var words = [];
-      rawWords.forEach(function (word) {
-        if (word.length > 0) {
-          words.push(word);
-        }
+    } else if (core.util.beginsIgnoreCase(text, selectTrigger)) {
+      var rawWords = text.substring(selectTrigger.length).split(' ');
+      var words = _.reject(rawWords, function (word) {
+        return word.length === 0;
       });
-      var index = Math.floor(Math.random() * words.length);
-      bot.sayPub(nick + ': selected ' + words[index] + '!');
+      var index = _.random(words.length - 1);
+      core.irc.sayFmt('%s: selected %s!', nick, words[index]);
     }
-  };
-  bot.on('pub', listener);
+  }
 
-  return function () {
-    bot.removeListener('pub', listener);
+  plugin.load = function () {
+    core.irc.on('pub', pubListener);
   };
+
+  plugin.unload = function () {
+    core.irc.removeListener('pub', pubListener);
+  };
+
+  return plugin;
 };

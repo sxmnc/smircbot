@@ -5,11 +5,15 @@ var algorithms = crypto.getHashes().map(function (algorithm) {
   return algorithm.toLowerCase();
 });
 
-module.exports = function (bot, core, config) {
+module.exports = function (core) {
+  var plugin = {};
 
-  core.help.hash = '$hash <algorithm> <text-to-encrypt>';
+  plugin.help = {
+    hash: '$hash algorithm input\n' +
+        'Hashes text with the given algorithm.',
+  };
 
-  var listener = function (nick, text, msg) {
+  function pubListener(nick, text, msg) {
     var match = text.match(/^\$hash\s(\S+)\s(.+)$/);
     if (match) {
       var algorithm = match[1];
@@ -20,20 +24,25 @@ module.exports = function (bot, core, config) {
           var inst = crypto.createHash(algorithm);
           inst.update(input, 'utf8');
           var hash = inst.digest('hex');
-          bot.sayPub('[' + algorithm + '] -> ' + hash);
-        } catch (e) {
-          bot.sayPub('[' + algorithm +
-            '] does not support the digest method. wut?');
+          core.irc.sayFmt('[%s] -> %s', algorithm, hash);
+        } catch (err) {
+          core.irc.sayFmt('[%s] does not support the digest method. wut?',
+              algorithm);
         }
       } else {
-        bot.sayPub('Unknown algorithm "' + algorithm + '".');
+        core.irc.sayFmt('Unknown algorithm "%s".', algorithm);
       }
     }
-  };
-  bot.on('pub', listener);
+  }
 
-  return function () {
-    bot.removeListener('pub', listener);
+  plugin.load = function () {
+    core.irc.on('pub', pubListener);
   };
+
+  plugin.unload = function () {
+    core.irc.removeListener('pub', pubListener);
+  };
+
+  return plugin;
 };
 

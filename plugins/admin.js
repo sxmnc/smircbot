@@ -1,88 +1,88 @@
-module.exports = function (bot, core, config) {
+var _ = require('lodash');
 
-  // core.help.reqop = '$reqop\n' +
-  //    'Gives you the +o mode. You must have permission.';
+module.exports = function (core) {
+  var plugin = {};
+  var config = core.config.admin;
 
-  // core.help.deop = '$deop [user]\n' +
-  //    'Removes the +o mode. With no target the target is you.';
+  plugin.help = {
+    fixperm: '$fixperm\n' +
+        'Fixes channel permissions for everyone connected.',
+    kick: '$kick user\n' +
+        'Kicks a user. You must have permission.',
+  };
 
-  core.help.fixperm = '$fixperm\n' +
-      'Fixes channel permissions for everyone connected.';
-
-  core.help.kick = '$kick user\n' +
-      'Kicks a user. You must have permission.';
+  function nickIsAdmin(nick) {
+    return _.find(config.admins, function (admin) {
+      return core.util.eqIgnoreCase(nick, admin);
+    });
+  }
 
   function checkPerm(nick, callback) {
-    if (config.admins.indexOf(nick) === -1) {
-      bot.sayPub(nick + ': Permission denied.');
+    if (!nickIsAdmin(nick)) {
+      core.irc.sayFmt(
+          '%s: Permission denied, you are not an admin.', nick);
     } else {
-      var whoisListener = function (msg) {
-        if (msg.command === '330' && msg.args[1] === nick) {
-          bot.removeListener('raw', whoisListener);
+      core.irc.maybeOnce('raw', function (done, msg) {
+        if (msg.rawCommand === core.rpl.whoisloggedin &&
+            core.util.eqIgnoreCase(msg.args[1], nick)) {
+          done();
           callback();
-        } else if (msg.command === 'rpl_endofwhois' && msg.args[1] === nick) {
-          bot.sayPub(nick + ': Permission denied.');
-          bot.removeListener('raw', whoisListener);
+        } else if (msg.rawCommand === core.rpl.endofwhois &&
+            core.util.eqIgnoreCase(msg.args[1], nick)) {
+          core.irc.sayFmt(
+              '%s: Permission denied, you are not identified.', nick);
+          done();
         }
-      };
-      bot.on('raw', whoisListener);
-      bot.send('WHOIS', nick);
+      });
+      core.irc.send('whois', nick);
     }
   }
 
-  var listener = function (nick, text, msg) {
-    if (text === '$fixperm') {
+  function pubListener(nick, text, msg) {
+    var fixpermTrigger = '$fixperm';
+    var kickTrigger = '$kick ';
+
+    if (core.util.eqIgnoreCase(text, fixpermTrigger)) {
       checkPerm(nick, function () {
-        var namesListener = function (nicks) {
-          for (var nick in nicks) {
-            if (nick !== core.nickname && nicks[nick] === '@') {
-              bot.send('MODE', core.channel, '-o', nick);
+        core.irc.maybeOnce('names' + core.channel, function (done, nicks) {
+          _.forOwn(nicks, function (perm, nick) {
+            if (nick !== core.nickname && perm === '@') {
+              core.irc.send('mode', core.channel, '-o', nick);
             }
-          }
-          bot.removeListener('names' + core.channel, namesListener);
-        };
-        bot.on('names' + core.channel, namesListener);
-        bot.send('NAMES', core.channel);
+          });
+        });
+        core.irc.send('names', core.channel);
         if (config.logger) {
-          bot.send('MODE', core.channel, '+v', config.logger);
+          core.irc.send('mode', core.channel, '+v', config.logger);
         }
       });
 
-    } else if (text.indexOf('$kick ') === 0) {
-      var kickee = text.substring('$kick '.length);
+    } else if (core.util.beginsIgnoreCase(text, kickTrigger)) {
+      var kickee = text.substring(kickTrigger.length);
       checkPerm(nick, function () {
-        if (kickee === core.nickname) {
-          bot.sayPub(nick + ': You are not allowed to kick me!');
-        } else if (kickee === config.logger) {
-          bot.sayPub(nick + ': You are not allowed to kick the logger!');
-        } else if (config.admins.indexOf(kickee) !== -1) {
-          bot.sayPub(nick + ': You are not allowed to kick an admin!');
+        if (core.util.beginsIgnoreCase(kickee, core.nickname)) {
+          core.irc.sayFmt(
+              '%s: You are not allowed to kick me!', nick);
+        } else if (core.util.beginsIgnoreCase(kickee, config.logger)) {
+          core.irc.sayFmt(
+              '%s: You are not allowed to kick the logger!', nick);
+        } else if (nickIsAdmin(kickee)) {
+          core.irc.sayFmt(
+              '%s: You are not allowed to kick an admin!', nick);
         } else {
-          bot.send('KICK', core.channel, kickee);
+          core.irc.send('kick', core.channel, kickee);
         }
       });
     }
+  }
 
-    // /* OP COMMANDS */
-    //
-    // else if (text === '$reqop') {
-    //  checkPerm(nick, function () {
-    //    bot.send('MODE', core.channel, '+o', nick);
-    //  });
-    // } else if (text === '$deop') {
-    //   bot.send('MODE', core.channel, '-o', nick);
-    //
-    // } else if (text.indexOf('$deop ') === 0) {
-    //   var deopee = text.substring('$deop '.length);
-    //   checkPerm(nick, function () {
-    //     bot.send('MODE', core.channel, '-o', deopee);
-    //   });
-    // }
-
+  plugin.load = function () {
+    core.irc.on('pub', pubListener);
   };
-  bot.on('pub', listener);
 
-  return function () {
-    bot.removeListener('pub', listener);
+  plugin.unload = function () {
+    core.irc.removeListener('pub', pubListener);
   };
+
+  return plugin;
 };

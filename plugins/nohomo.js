@@ -1,13 +1,21 @@
-module.exports = function (bot, core, config) {
+var _ = require('lodash');
 
-  var listener = function (nick, text, msg) {
-    if (text.indexOf('<3') !== -1) {
-      bot.sayPub('#nohomo');
+module.exports = function (core) {
+  var plugin = {};
+
+  function pubListener(nick, text, msg) {
+    if (_.contains(text, '<3')) {
+      core.irc.sayPub('#nohomo');
     }
-  };
-  bot.on('pub', listener);
+  }
 
-  return function () {
-    bot.removeListener('pub', listener);
+  plugin.load = function () {
+    core.irc.on('pub', pubListener);
   };
+
+  plugin.unload = function () {
+    core.irc.removeListener('pub', pubListener);
+  };
+
+  return plugin;
 };
