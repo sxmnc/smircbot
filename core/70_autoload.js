@@ -25,7 +25,7 @@ module.exports = function (core, rootPath) {
       delete require.cache[path];
       core.emit('pluginUnload', path);
     } catch (err) {
-      core.emit('pluginErr', err);
+      core.emit('pluginError', err);
     }
   }
 
