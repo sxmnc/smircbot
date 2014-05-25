@@ -45,4 +45,8 @@ module.exports = function (core) {
   core.on('pluginError', function (err) {
     console.log('[ERROR]', err);
   });
+
+  process.on('uncaughtException', function (err) {
+    console.log('[ERROR]', err);
+  });
 };
