@@ -13,7 +13,8 @@
     "node-watch": "0.3.x",
     "moment": "2.6.x",
     "request": "2.34.x",
-    "entities": "1.1.x"
+    "entities": "1.1.x",
+    "mathjs": "0.22.x"
   },
   "devDependencies": {
     "grunt": "0.4.x",
