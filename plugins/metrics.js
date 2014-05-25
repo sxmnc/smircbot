@@ -6,7 +6,7 @@ module.exports = function (core) {
 
   var trigger = '$metrics';
 
-  function pubListener(nick, text, msg) {
+  function pubListener(nick, text) {
     if (core.util.eqIgnoreCase(text, trigger)) {
       var uptime = moment.duration(moment().diff(core.startTime));
       core.irc.sayFmt('%s plugins loaded, %sd %sh %sm %ss uptime',

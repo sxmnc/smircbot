@@ -38,7 +38,7 @@ module.exports = function (core) {
     }
   }
 
-  function pubListener(nick, text, msg) {
+  function pubListener(nick, text) {
     var fixpermTrigger = '$fixperm';
     var kickTrigger = '$kick ';
 

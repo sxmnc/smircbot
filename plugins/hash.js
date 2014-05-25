@@ -13,7 +13,7 @@ module.exports = function (core) {
         'Hashes text with the given algorithm.',
   };
 
-  function pubListener(nick, text, msg) {
+  function pubListener(nick, text) {
     var match = text.match(/^\$hash\s(\S+)\s(.+)$/);
     if (match) {
       var algorithm = match[1];

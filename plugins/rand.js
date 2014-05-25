@@ -10,7 +10,7 @@ module.exports = function (core) {
         'Selects a random word in the list given as an argument.',
   };
 
-  function pubListener(nick, text, msg) {
+  function pubListener(nick, text) {
     var rollTrigger = '$roll ';
     var selectTrigger = '$select ';
 

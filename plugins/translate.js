@@ -8,7 +8,7 @@ module.exports = function (core) {
         'Translates text. The source language can be detected automatically.',
   };
 
-  function pubListener(nick, text, msg) {
+  function pubListener(nick, text) {
     var match = text.match(/^\$translate\s(\w{2}\-?(\w{2})?)\s+(.+)$/i);
     if (match) {
       request({

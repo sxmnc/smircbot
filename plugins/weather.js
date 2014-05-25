@@ -10,7 +10,7 @@ module.exports = function (core) {
 
   var regex = /^\$weather\s(.+)$/;
 
-  function pubListener(nick, text, msg) {
+  function pubListener(nick, text) {
     var match = text.match(regex);
     if (match) {
       var city = match[1];

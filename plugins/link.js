@@ -4,7 +4,7 @@ var request = require('request');
 module.exports = function (core) {
   var plugin = {};
 
-  function pubListener(nick, text, msg) {
+  function pubListener(nick, text) {
     var match = text.match(/\bhttps?:\/\/[^\s]+\b/g);
     if (match) {
       var url = match[0];

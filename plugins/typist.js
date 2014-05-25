@@ -74,7 +74,7 @@ module.exports = function (core) {
     }
   }, 1000);
 
-  function pubListener(nick, text, msg) {
+  function pubListener(nick, text) {
     var trigger = '$typist ';
 
     if (core.util.beginsIgnoreCase(text, trigger)) {

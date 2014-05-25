@@ -3,7 +3,7 @@ var _ = require('lodash');
 module.exports = function (core) {
   var plugin = {};
 
-  function pubListener(nick, text, msg) {
+  function pubListener(nick, text) {
     if (_.contains(text, '<3')) {
       core.irc.sayPub('#nohomo');
     }

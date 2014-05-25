@@ -10,7 +10,7 @@ module.exports = function (core) {
         'Prints out help about a bot plugin or command.',
   };
 
-  function pubListener(nick, text, msg) {
+  function pubListener(nick, text) {
     var trigger = '$help ';
 
     if (core.util.beginsIgnoreCase(text, trigger)) {
