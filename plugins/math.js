@@ -4,6 +4,13 @@ var math = mathjs();
 module.exports = function (core) {
   var plugin = {};
 
+  plugin.help = {
+    math: '$math expression\n' +
+      'Print the result of a mathematical expression.',
+    mathclear: '$mathclear\n' +
+      'Clear the current math context.',
+  };
+
   var mathTrigger = '$math ';
   var clearTrigger = '$mathclear';
   var parser = math.parser();

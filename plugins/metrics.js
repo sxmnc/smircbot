@@ -4,6 +4,11 @@ var moment = require('moment');
 module.exports = function (core) {
   var plugin = {};
 
+  plugin.help = {
+    metrics: '$metrics\n' +
+      'Print statistics about the bot.',
+  };
+
   var trigger = '$metrics';
 
   function pubListener(nick, text) {
