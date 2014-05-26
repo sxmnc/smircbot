@@ -23,6 +23,7 @@ module.exports = function (grunt) {
         undef: true,
         unused: 'vars',
         trailing: true,
+        evil: true,
       },
     },
     jscs: {
