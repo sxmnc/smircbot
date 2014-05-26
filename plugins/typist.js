@@ -134,7 +134,7 @@ module.exports = function (core) {
               lives[players.indexOf(nick)]);
         }
       }
-      if (players.length === 0) {
+      if (players.length === 0 && playing) {
         reset();
         core.irc.sayPub('Everyone is dead! no winner :(');
       }
