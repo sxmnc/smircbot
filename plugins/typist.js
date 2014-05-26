@@ -65,7 +65,7 @@ module.exports = function (core) {
         phrase = setPhrase();
         timer++;
       } else if (timer <= 3) {
-        core.irc.sayPub(3 - timer);
+        core.irc.sayPub(4 - timer);
         timer++;
       } else {
         writePhase = true;
