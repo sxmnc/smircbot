@@ -24,6 +24,7 @@ module.exports = function (grunt) {
         unused: 'vars',
         trailing: true,
         evil: true,
+        boss: true,
       },
     },
     jscs: {
