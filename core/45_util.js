@@ -11,5 +11,9 @@ module.exports = function (core) {
     beginsIgnoreCase: function (a, b) {
       return a.toLowerCase().indexOf(b.toLowerCase()) === 0;
     },
+
+    containsIgnoreCase: function (a, b) {
+      return a.toLowerCase().indexOf(b.toLowerCase()) !== -1;
+    },
   };
 };
