@@ -51,6 +51,12 @@ module.exports = function (core) {
     this.say(core.channel, fmt.apply(null, arguments));
   };
 
+  // Send a NICK command and also set core.nickname.
+  core.irc.setNick = function (nick) {
+    this.send('nick', nick);
+    core.nickname = nick;
+  };
+
   // Check if a message is about a identify command suceeding.
   function identifySuccess(msg) {
     return msg.nick &&
