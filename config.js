@@ -15,18 +15,16 @@ module.exports = {
   translateApiKey: '********',
   weatherApiKey: '********',
 
-  admin: {
-    logger: 'smlogger',
-    admins: [
-      'alxgnon',
-      'SBSTP',
-      'Kiniamar0',
-      'kiniamaro',
-      'DrFoliberg',
-      'MrJudgemental',
-      'PetitPrince',
-    ],
-  },
+  admins: [
+    'alxgnon',
+    'SBSTP',
+    'Kiniamar0',
+    'kiniamaro',
+    'DrFoliberg',
+    'MrJudgemental',
+    'PetitPrince',
+    'smlogger',
+  ],
 
   typist: [
     "the quick brown fox jumps over the lazy dog",
