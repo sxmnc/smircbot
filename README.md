@@ -51,6 +51,8 @@ Utility functions that are useful for writing plugins.
 Check if two strings are equal, while ignoring case.
 #### core.util.beginsIgnoreCase(a, b) :: `Function -> Boolean`
 Check if string `a` begins with string `b`, while ignoring case.
+#### core.util.containsIgnoreCase(a, b) :: `Function -> Boolean`
+Check if string `a` contains string `b`, while ignoring case.
 
 ---
 
@@ -65,7 +67,8 @@ Shorthand method for saying messages on the current channel.
 #### core.irc.sayFmt(format, args ...) :: `Function`
 Shorthand method for saying formatted messages on the current channel.
 The syntax is the same as node's [util.format](http://nodejs.org/api/util.html#util_util_format_format).
-
+#### core.irc.setNick(nick) :: `Function`
+Set the bot's nickname with this method.
 
 ---
 
