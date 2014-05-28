@@ -1,0 +1,63 @@
+html, body, a, table, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    text-decoration: none;
+}
+
+a, a:hover, a:visited {
+    color: inherit;
+}
+
+body {
+    line-height: 1.5;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    background-color: #222;
+    text-align: justify;
+    color: #ddd;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+td.c a {
+    text-decoration: underline;
+}
+
+tr.__event td.a, tr.__event td.c {
+    background-color: #444;
+}
+tr.__event td.b {
+    background-color: #555;
+}
+
+td.a { background-color: #222 }
+td.b { background-color: #333 }
+td.c { background-color: #222 }
+
+tr.mrjudgemental { color: #fff3d4 }
+tr.thebotisbroken { color: #fff3d4 }
+tr.fifteenistooshor { color: #fff3d4 }
+tr.kiniamar0 { color: #9da7ed }
+tr.kiniamaro { color: #9da7ed }
+tr.alxgnon { color: #ed9d9d }
+tr.drfoliberg { color: #bada55 }
+tr.sbstp { color: #b8a2c5 }
+tr.maxime_ { color: #54a5e6 }
+tr.petitprince { color: #beeebe }
+tr.seiyria { color: #c373f3 }
+tr.smircbot { color: #eaca8e }
+tr.kwamebeke { color: #c09454 }
