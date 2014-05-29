@@ -95,7 +95,7 @@ module.exports = function (core) {
     }
     write('&nbsp;', fmt(
         '<span class="%s">%s</span> has left %s (%s)',
-        nick.toLowerCase(), nick, core.channel, reason),
+        nick.toLowerCase(), nick, core.channel, escapeHtml(reason)),
         '__event');
   }
 
@@ -107,7 +107,7 @@ module.exports = function (core) {
         '<span class="%s">%s</span> has been kicked by ' +
         '<span class="%s">%s</span> (%s)',
         nick.toLowerCase(), nick,
-        by.toLowerCase(), by, reason),
+        by.toLowerCase(), by, escapeHtml(reason)),
         '__event');
   }
 
@@ -118,7 +118,7 @@ module.exports = function (core) {
     if (channels.indexOf(core.channel.toLowerCase()) !== -1) {
       write('&nbsp;', fmt(
           '<span class="%s">%s</span> has quit (%s)',
-          nick.toLowerCase(), nick, reason),
+          nick.toLowerCase(), nick, escapeHtml(reason)),
           '__event');
     }
   }
