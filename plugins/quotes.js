@@ -15,7 +15,7 @@ module.exports = function (core) {
                 var total = core.config.quotes.length;
                 var phrase = core.config.quotes[_.random(total - 1)];
                     core.irc.sayPub(phrase);
-            } else if (arg) {
+            } else if (core.util.beginsIgnoreCase(text, trigger + ' ')) {
                 var quote = core.config.quotes[parseInt(arg)];
                 if (quote){
                     core.irc.sayPub(quote);

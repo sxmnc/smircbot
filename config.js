@@ -4,12 +4,12 @@ module.exports = {
     port: 6667,
     channel: '#SexManiac',
 
-    nickname: 'kiniamar0',
+    nickname: 'smircbot',
     realname: '#SexManiac IRC bot',
     password: '********',
-    operator: false,
+    operator: true,
 
-    debug: false,
+    debug: true,
   },
 
   translateApiKey: '********',
