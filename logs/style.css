@@ -46,7 +46,7 @@ tr.__event td.b {
 
 td.a { background-color: #222 }
 td.b { background-color: #333 }
-td.c { background-color: #222 }
+td.c { background-color: #222; width: 100% }
 
 .mrjudgemental { color: #fff3d4 }
 .thebotisbroken { color: #fff3d4 }
