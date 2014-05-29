@@ -27,14 +27,15 @@ module.exports = function (core) {
   function argsToArray(argsString) {
     //http://stackoverflow.com/a/18647776/2178646
     var argsArray = [];
-    var match;
 
-    do {
-      match = /[^\s"]+|"([^"]*)"/gi.exec(argsString);
-      if (match !== null) {
-        argsArray.push(match[1] ? match[1] : match[0]);
-      }
-    } while (match !== null);
+    argsArray = argsString.match(/"[^"]+"|\s?\w+\s?/g);
+    
+    argsArray.forEach(function(arg, index, array){
+      array[index] = arg.trim();;
+      array[index] = arg.replace(/"/g, "");
+    });
+
+    core.irc.sayFmt("DEBUG : ||%s||%s||%s||%s||", argsArray[0],argsArray[1],argsArray[2],argsArray[3]);
 
     return argsArray;
   }
@@ -76,16 +77,22 @@ module.exports = function (core) {
       }
     } else if (core.util.beginsIgnoreCase(text, callers.endvote)) {
       //var args = text.substring(callers.endvote.length);
-
+      core.irc.sayPub('Unloading listeners.');
+      activePools.forEach(function (pool) {
+        core.irc.removeListener('pub', pool.listener);
+      });
 
     } else if (core.util.beginsIgnoreCase(text, callers.unvote)) {
       //var args = text.substring(callers.unvote.length);
+      core.irc.sayFmt('%s is unimplemented.', callers.unvote);
 
     } else if (core.util.beginsIgnoreCase(text, callers.stats)) {
       //var args = text.substring(callers.stats.length);
+      core.irc.sayFmt('%s is unimplemented.', callers.stats);
 
     } else if (core.util.beginsIgnoreCase(text, callers.list)) {
       //No args on this one
+      core.irc.sayFmt('%s is unimplemented.', callers.list);
     }
   }
 
@@ -94,7 +101,7 @@ module.exports = function (core) {
       var optionIndex = pool.options.indexOf(text) >= 0;
       if (optionIndex >= 0) {
         if (pool.votes.hasOwnProperty(nick)) {
-          if (pool.votes[nick] === pool.options[optionIndex]) {
+          if (core.util.eqIgnoreCase(pool.votes[nick], pool.options[optionIndex])) {
             core.irc.sayPub(nick + ' : You\'ve already voted for this');
           } else {
             pool.votes[nick] = pool.options[optionIndex];
