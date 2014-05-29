@@ -9,11 +9,20 @@ module.exports = function (core) {
     
     function pubListener(nick, text) {
         var trigger = '$quotes';
-        
         if (core.util.beginsIgnoreCase(text, trigger)) {
-            var total = core.config.quotes.length;
-            var phrase = core.config.quotes[_.random(total - 1)];
-                core.irc.sayPub(phrase);
+            var arg = text.substring(trigger.length + 1);
+            if (core.util.eqIgnoreCase(text, trigger)) {
+                var total = core.config.quotes.length;
+                var phrase = core.config.quotes[_.random(total - 1)];
+                    core.irc.sayPub(phrase);
+            } else if (arg) {
+                var quote = core.config.quotes[parseInt(arg)];
+                if (quote){
+                    core.irc.sayPub(quote);
+                } else {
+                   core.irc.sayPub('no quote "' + arg + '"');
+                }
+            }
         }
     }
     plugin.load = function () {
