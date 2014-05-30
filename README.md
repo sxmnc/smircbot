@@ -69,6 +69,9 @@ Shorthand method for saying formatted messages on the current channel.
 The syntax is the same as node's [util.format](http://nodejs.org/api/util.html#util_util_format_format).
 #### core.irc.setNick(nick) :: `Function`
 Set the bot's nickname with this method.
+#### core.irc.useNick(nick, function) :: `Function`
+Change the bot nickname for the specified one for the duration of the function.
+As of now, it is likely to cause issues if used with asynchronous tasks.
 
 ---
 
