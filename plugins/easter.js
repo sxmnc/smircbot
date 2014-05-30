@@ -16,10 +16,9 @@ module.exports = function (core) {
     if (_.contains(text, triggers.lilheart)) {
       core.irc.sayPub('#nohomo');
     } else if (core.util.eqIgnoreCase(text, callers.beke)) {
-      var oldNick = core.nickname;
-      core.irc.setNick('KwameBeke');
-      core.irc.sayPub('Hé hé hé...');
-      core.irc.setNick(oldNick);
+      core.irc.useNick('KwameBeke', function(){
+        core.irc.sayPub('Hé hé hé...');
+      });
     } else if (core.util.eqIgnoreCase(text, callers.lucario)) {
       core.irc.sayPub('The bot cannot do Lucario. Lucario is way too sexy.');
     }
