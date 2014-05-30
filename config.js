@@ -57,4 +57,13 @@ module.exports = {
     "my precious",
     "I'm the king of the world!",
   ],
+  
+  quotes: [
+    '"C\'est parce que c\'Est pas du loli rape" - kiniamaro 2014',
+    '"ouais, I\'m not letting it die, c\'est mon dernier mac à vie" - alxgnon 2014',
+    'http://i.imgur.com/0CW6W7t.jpg',
+    '"the bot is broken" - everyone 2014',
+    '"Check ben comment j\'installe Arch en 30 minutes!" - MrJudgemental 2014',
+    'http://pastebin.com/BrtTPvXT'
+  ],
 };
