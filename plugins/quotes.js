@@ -4,7 +4,8 @@ module.exports = function (core) {
   var plugin = {};
 
   plugin.help = {
-    quotes: 'display a random famous quote from the #SexManiac users',
+    quotes: '$quotes\n' +
+        'Display a random famous quote from the #SexManiac users',
   };
 
   function pubListener(nick, text) {
