@@ -21,7 +21,7 @@ module.exports = function (core) {
         if (quote) {
           core.irc.sayPub(quote);
         } else {
-          core.irc.sayPub('no quote "' + arg + '"');
+          core.irc.sayFmt('no quote "%s"', arg);
         }
       }
     }
