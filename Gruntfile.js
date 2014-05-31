@@ -87,7 +87,6 @@ module.exports = function (grunt) {
         requireLineFeedAtFileEnd: true,
         maximumLineLength: 80,
         requireCapitalizedConstructors: true,
-        requireDotNotation: true,
         disallowYodaConditions: true,
         requireTrailingCommaInExpandedLiterals: {
           inArrays: true,
