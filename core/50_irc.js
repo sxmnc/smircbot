@@ -57,6 +57,16 @@ module.exports = function (core) {
     core.nickname = nick;
   };
 
+  // Uses the specified nick for the duration of the specified function
+  core.irc.useNick = function (tmpNick, task) {
+    var originalNick = core.nickname;
+    this.send('nick', tmpNick);
+    core.nickname = tmpNick;
+    task();
+    this.send('nick', originalNick);
+    core.nickname = originalNick;
+  };
+
   // Check if a message is about a identify command suceeding.
   function identifySuccess(msg) {
     return msg.nick &&
