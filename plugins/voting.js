@@ -20,22 +20,19 @@ module.exports = function (core) {
 //    tag: "",
 //    question: "",
 //    options: [],
+//    asker: "",
 //    votes: {},
-//    listener: function(){}
+//    listener: function(){},
+//    callback: function(){}
 //  };
 
   function argsToArray(argsString) {
     //http://stackoverflow.com/a/18647776/2178646
-    var argsArray = [];
+    var argsArray = argsString.match(/"[^"]+"|\s?\w+\s?/g);
 
-    argsArray = argsString.match(/"[^"]+"|\s?\w+\s?/g);
-    
-    argsArray.forEach(function(arg, index, array){
-      array[index] = arg.trim();;
-      array[index] = arg.replace(/"/g, "");
+    argsArray.forEach(function (arg, index, array) {
+      array[index] = arg.trim().replace(/"/g, "");
     });
-
-    core.irc.sayFmt("DEBUG : ||%s||%s||%s||%s||", argsArray[0],argsArray[1],argsArray[2],argsArray[3]);
 
     return argsArray;
   }
@@ -49,32 +46,8 @@ module.exports = function (core) {
 
   function pubListener(nick, text) {
     if (core.util.beginsIgnoreCase(text, callers.callvote)) {
-
-      if (activePools.length >= maxPools) {
-        core.irc.sayFmt("No more pools can be opened,' +" +
-            ' we\'ve already reached the limit of %s.', maxPools);
-      } else {
-        var args = argsToArray(text.substring(callers.callvote.length));
-        var pool = createPool(args);
-
-        if (poolWithTagExists(pool.tag)) {
-          if (pool.tag === '') {
-            core.irc.sayFmt('There is already a pool in the default slot,' +
-                ' please specify a voting tag' +
-                ' (i.e : %s #myquestion \"Question\" awnsers) or' +
-                ' close the existing pool.', callers.callvote);
-          } else {
-            core.irc.sarFmt('There is already a pool using the tag %s,' +
-                'please use another.');
-          }
-        } else {
-          core.irc.sayFmt('%s called for a vote : \"%s\"', nick, pool.question);
-          core.irc.sayFmt('The options are %s', pool.options.join(','));
-          core.irc.sayPub('Let the votes begin!');
-          activePools.push(pool);
-          core.irc.on('pub', pool.listener);
-        }
-      }
+      var args = argsToArray(text.substring(callers.callvote.length));
+      createPool(args, nick);
     } else if (core.util.beginsIgnoreCase(text, callers.endvote)) {
       //var args = text.substring(callers.endvote.length);
       core.irc.sayPub('Unloading listeners.');
@@ -101,39 +74,65 @@ module.exports = function (core) {
       var optionIndex = pool.options.indexOf(text) >= 0;
       if (optionIndex >= 0) {
         if (pool.votes.hasOwnProperty(nick)) {
-          if (core.util.eqIgnoreCase(pool.votes[nick], pool.options[optionIndex])) {
-            core.irc.sayPub(nick + ' : You\'ve already voted for this');
+          if (core.util.eqIgnoreCase(pool.votes[nick],
+              pool.options[optionIndex])) {
+            core.irc.sayFmt('%s : You\'ve already voted for this', nick);
           } else {
             pool.votes[nick] = pool.options[optionIndex];
-            core.irc.sayPub(nick + ' changed his vote.');
+            core.irc.sayFmt('%s changed his vote.', nick);
           }
         } else {
           pool.votes[nick] = pool.options[optionIndex];
-          core.irc.sayPub(nick + ' voted!');
+          core.irc.sayFmt('%s voted!', nick);
         }
       }
     };
   }
 
-  function createPool(args) {
+  function createPool(args, askerNick) {
     var pool = {};
 
     //Check if first arg is a tag
     if (args[0].indexOf(tagPrefix) === 0) {
       //Even if it is, we don't care.
-      //The pool is a singleton
+      //TODO The pool is a singleton. For now at least
       pool.tag = '';
       args.shift();
     } else {
       pool.tag = '';
     }
 
-    pool.question = args[0];
-    args.shift();
+    if (activePools.length >= maxPools) {
+      core.irc.sayFmt("No more pools can be opened,' +" +
+          ' we\'ve already reached the limit of %s.', maxPools);
+    } else {
 
-    pool.options = args;
+      if (poolWithTagExists(pool.tag)) {
+        if (pool.tag === '') {
+          core.irc.sayFmt('There is already a pool in the default slot,' +
+              ' please specify a voting tag' +
+              ' (i.e : %s #myquestion \"Question\" awnsers) or' +
+              ' close the existing pool.', callers.callvote);
+        } else {
+          core.irc.sarFmt('There is already a pool using the tag %s,' +
+              'please use another.');
+        }
+      } else {
+        pool.question = args[0];
+        args.shift();
 
-    pool.listener = createOptionListener(pool.options);
+        pool.options = args;
+
+        pool.listener = createOptionListener(pool.options);
+
+        core.irc.sayFmt('%s called for a vote : \"%s\"',
+            askerNick, pool.question);
+        core.irc.sayFmt('The options are %s', pool.options.join(','));
+        core.irc.sayPub('Let the votes begin!');
+        activePools.push(pool);
+        core.irc.on('pub', pool.listener);
+      }
+    }
   }
 
   plugin.load = function () {
