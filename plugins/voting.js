@@ -32,7 +32,7 @@ module.exports = function (core) {
     var argsArray = argsString.match(/"[^"]+"|\s?\w+\s?/g);
 
     argsArray.forEach(function (arg, index, array) {
-      array[index] = arg.trim().replace(/"/g, "");
+      array[index] = arg.trim().replace(/"/g, '');
     });
 
     return argsArray;
@@ -46,18 +46,20 @@ module.exports = function (core) {
 
 //*******************************************************************
   function pubListener(nick, text) {
+    var args;
+
     if (core.util.beginsIgnoreCase(text, callers.callvote)) {
-      var args = argsToArray(text.substring(callers.callvote.length));
+      args = argsToArray(text.substring(callers.callvote.length));
       voteCall(args, nick);
     } else if (core.util.beginsIgnoreCase(text, callers.endvote)) {
-      var args = text.substring(callers.endvote.length);
+      args = text.substring(callers.endvote.length);
       voteEnd(args, nick);
     } else if (core.util.beginsIgnoreCase(text, callers.unvote)) {
-      //var args = text.substring(callers.unvote.length);
+      //args = text.substring(callers.unvote.length);
       core.irc.sayFmt('%s is unimplemented.', callers.unvote);
 
     } else if (core.util.beginsIgnoreCase(text, callers.stats)) {
-      //var args = text.substring(callers.stats.length);
+      //args = text.substring(callers.stats.length);
       core.irc.sayFmt('%s is unimplemented.', callers.stats);
 
     } else if (core.util.beginsIgnoreCase(text, callers.list)) {
@@ -86,15 +88,15 @@ module.exports = function (core) {
       }
     };
   }
-  
-  function genericVoteCallback(pool){
+
+  function genericVoteCallback(pool) {
     //Counting votes
     var scoreboard = evaluateScore(pool);
     var winningIndex = scoreboard.indexOf(Math.max.apply(Math, scoreboard));
 
     core.irc.sayPub('The votes are in!');
-    core.irc.sayFmt('On the question of \"%s\" the winner is \"%s\" with a'
-        + 'total of %s votes.', pool.question, pool.options[winningIndex],
+    core.irc.sayFmt('On the question of \"%s\" the winner is \"%s\" with a' +
+        'total of %s votes.', pool.question, pool.options[winningIndex],
         scoreboard[winningIndex]);
   }
 
@@ -112,8 +114,8 @@ module.exports = function (core) {
     }
 
     if (openPools.length >= maxPools) {
-      core.irc.sayFmt("No more pools can be opened," +
-          " we\'ve already reached the limit of %s.", maxPools);
+      core.irc.sayFmt('No more pools can be opened,' +
+          ' we\'ve already reached the limit of %s.', maxPools);
     } else {
 
       if (poolWithTagExists(tag)) {
@@ -144,8 +146,8 @@ module.exports = function (core) {
       }
     }
   }
-  
-  function voteEnd(args, nick){
+
+  function voteEnd(args, nick) {
 	//TODO : Make it close the pool received in argument only.
     openPools.forEach(function (pool) {
       core.irc.removeListener('pub', pool.listener);
@@ -153,15 +155,14 @@ module.exports = function (core) {
       openPools.splice(openPools.indexOf(pool), 1);
     });
   }
-  
-  
-  function newPool(tag, question, options, asker, callback){
+
+  function newPool(tag, question, options, asker, callback) {
     var pool = {};
     pool.tag = tag;
     pool.question = question;
     pool.options = options;
     pool.asker = asker;
-	pool.votes = {};
+    pool.votes = {};
     pool.listener = createOptionListener(pool);
     pool.callback = callback;
     return pool;
@@ -172,34 +173,34 @@ module.exports = function (core) {
    * Returns a number if optionKey is defined and an array matching the options
    * array otherwise.
    */
-  function evaluateScore(pool, optionKey){
-	var voteSelection;
-	var optionIndex;
+  function evaluateScore(pool, optionKey) {
+    var voteSelection;
+    var optionIndex;
 	//http://stackoverflow.com/a/13735425/2178646
-	var scoreboard = Array.apply(null, new Array(pool.options.length))
-	    .map(Number.prototype.valueOf,0);
-	
-    for (voter in pool.votes){
-  	  if(pool.votes.hasOwnProperty(voter)){
+    var scoreboard = Array.apply(null, new Array(pool.options.length))
+        .map(Number.prototype.valueOf,0);
+
+    for (var voter in pool.votes) {
+      if (pool.votes.hasOwnProperty(voter)) {
         voteSelection = pool.votes[voter];
         optionIndex = pool.options.indexOf(voteSelection);
-        if(optionIndex != -1){
-        	scoreboard[optionIndex]++;
-        }else{
-        	console.log("WARNING: Invalid vote (" + voter + ", " + voteSelection
-        	    + "), ignored");
+        if (optionIndex !== -1) {
+          scoreboard[optionIndex]++;
+        } else {
+          console.log('WARNING: Invalid vote (' + voter + ', ' +
+                voteSelection + '), ignored');
         }
       }
     }
 
-    if(typeof optionKey === "undefined") {
+    if (typeof optionKey === 'undefined') {
       return scoreboard;
     } else {
       optionIndex = pool.options.indexOf(optionKey);
-      if(optionIndex != -1) {
+      if (optionIndex !== -1) {
         return scoreboard[optionIndex];
       } else {
-    	return void 0;
+        return void 0;
       }
     }
   }
