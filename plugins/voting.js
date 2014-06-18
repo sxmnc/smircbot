@@ -122,7 +122,7 @@ module.exports = function (core) {
         if (tag === '') {
           core.irc.sayFmt('There is already a pool in the default slot,' +
               ' please specify a voting tag' +
-              ' (i.e : %s #myquestion "Question" awnsers) or' +
+              ' (i.e : %s #myquestion "Question" answers) or' +
               ' close the existing pool.', callers.callvote);
         } else {
           core.irc.sarFmt('There is already a pool using the tag %s,' +
