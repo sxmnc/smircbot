@@ -15,18 +15,16 @@ module.exports = {
   translateApiKey: '********',
   weatherApiKey: '********',
 
-  admin: {
-    logger: 'smlogger',
-    admins: [
-      'alxgnon',
-      'SBSTP',
-      'Kiniamar0',
-      'kiniamaro',
-      'DrFoliberg',
-      'MrJudgemental',
-      'PetitPrince',
-    ],
-  },
+  admins: [
+    'alxgnon',
+    'SBSTP',
+    'Kiniamar0',
+    'kiniamaro',
+    'DrFoliberg',
+    'MrJudgemental',
+    'PetitPrince',
+    'smlogger',
+  ],
 
   typist: [
     "the quick brown fox jumps over the lazy dog",
@@ -58,5 +56,15 @@ module.exports = {
     "open the pod bay doors please, HAL",
     "my precious",
     "I'm the king of the world!",
+  ],
+  
+  quotes: [
+    '"C\'est parce que c\'Est pas du loli rape" - kiniamaro 2014',
+    '"ouais, I\'m not letting it die, c\'est mon dernier mac à vie" - alxgnon 2014',
+    'http://i.imgur.com/0CW6W7t.jpg',
+    '"the bot is broken" - everyone 2014',
+    '"Check ben comment j\'installe Arch en 30 minutes!" - MrJudgemental 2014',
+    'http://pastebin.com/BrtTPvXT',
+    '"En arrière de la biblio municipale" - SBSTP 2014',
   ],
 };

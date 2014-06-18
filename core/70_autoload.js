@@ -61,4 +61,15 @@ module.exports = function (core, rootPath) {
   watch(configFile, function (path) {
     core.emit('configChange');
   });
+
+  // Unload all plugins on exit.
+  function killListener() {
+    _.invoke(core.plugins, 'unload');
+    setTimeout(function () {
+      process.exit(128);
+    }, 250);
+  }
+
+  process.on('SIGINT', killListener);
+  process.on('SIGTERM', killListener);
 };
