@@ -17,16 +17,6 @@ module.exports = function (core) {
 
   var openPools = [];
 
-//  var pool = {
-//    tag: "",
-//    question: "",
-//    options: [],
-//    asker: "",
-//    votes: {},
-//    listener: function(){},
-//    callback: function(){}
-//  };
-
   function argsToArray(argsString) {
     // http://stackoverflow.com/a/18647776/2178646
     var argsArray = argsString.match(/"[^"]+"|\s?\w+\s?/g);
@@ -155,14 +145,15 @@ module.exports = function (core) {
   }
 
   function newPool(tag, question, options, asker, callback) {
-    var pool = {};
-    pool.tag = tag;
-    pool.question = question;
-    pool.options = options;
-    pool.asker = asker;
-    pool.votes = {};
+    var pool = {
+      tag: tag,
+      question: question,
+      options: options,
+      asker: asker,
+      votes: {},
+      callback: callback,
+    };
     pool.listener = createOptionListener(pool);
-    pool.callback = callback;
     return pool;
   }
 
