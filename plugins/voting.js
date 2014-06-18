@@ -146,7 +146,7 @@ module.exports = function (core) {
   }
 
   function voteEnd(args, nick) {
-	// TODO : Make it close the pool received in argument only.
+  // TODO : Make it close the pool received in argument only.
     openPools.forEach(function (pool) {
       core.irc.removeListener('pub', pool.listener);
       pool.callback(pool);
@@ -174,7 +174,7 @@ module.exports = function (core) {
   function evaluateScore(pool, optionKey) {
     var voteSelection;
     var optionIndex;
-	  // http://stackoverflow.com/a/13735425/2178646
+    // http://stackoverflow.com/a/13735425/2178646
     var scoreboard = Array.apply(null, new Array(pool.options.length))
         .map(Number.prototype.valueOf,0);
 
