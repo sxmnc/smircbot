@@ -27,6 +27,7 @@ module.exports = function (core) {
 //    callback: function(){}
 //  };
 
+  //Utils
   function argsToArray(argsString) {
     //http://stackoverflow.com/a/18647776/2178646
     var argsArray = argsString.match(/"[^"]+"|\s?\w+\s?/g);
@@ -42,6 +43,26 @@ module.exports = function (core) {
     return _.find (openPools, function (elem) {
       return elem.tag === soughtTag;
     });
+  }
+  
+  function indexesOfHighest(array){
+    var indexesOfMax = [];
+    var max;
+    
+    //FIXME : Looks like this may return out of bounds values
+    indexesOfMax += 0;
+    max = array[0];
+
+    array.forEach(function (elem) {
+      if(elem >= max){
+        max = elem;
+    	indexesOfMax = [elem];
+      } else if (elem === max) {
+    	indexesOfMax += elem;
+      }
+    });
+    
+    return indexesOfMax;
   }
 
 //*******************************************************************
@@ -92,12 +113,27 @@ module.exports = function (core) {
   function genericVoteCallback(pool) {
     //Counting votes
     var scoreboard = evaluateScore(pool);
-    var winningIndex = scoreboard.indexOf(Math.max.apply(Math, scoreboard));
+    var winningIndexes = indexesOfHighest(scoreboard);
 
-    core.irc.sayPub('The votes are in!');
-    core.irc.sayFmt('On the question of \"%s\" the winner is \"%s\" with a' +
-        'total of %s votes.', pool.question, pool.options[winningIndex],
-        scoreboard[winningIndex]);
+    console.log(winningIndexes);
+    
+    if (Object.keys(pool.votes).length === 0) {
+      core.irc.sayPub('Nobody voted, the vote is cancelled.');
+    } else if (winningIndexes.length !== 1) {
+      core.irc.sayPub('The votes are in!');
+      if (winningIndexes.length === 2) {
+        core.irc.sayPub('%s and %s are both tied for victory, with %s votes' +
+            'each', pool.options[winningIndexes[0]],
+            pool.options[winningIndexes[1]], scoreboard[winningIndexes[0]]);
+      } else {
+        core.irc.sayPub('HOLD ON YOUR FUCKING HORSES!');
+      }
+    } else {
+      core.irc.sayPub('The votes are in!');
+      core.irc.sayFmt('On the question of \"%s\" the winner is \"%s\" with a' +
+          ' total of %s votes.', pool.question, pool.options[winningIndexes[0]],
+          scoreboard[winningIndexes[0]]);
+    }
   }
 
   function voteCall(args, askerNick) {
