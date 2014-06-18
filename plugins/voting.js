@@ -3,13 +3,13 @@ var _ = require('lodash');
 module.exports = function (core) {
   var plugin = {};
   var callers = {
-    callvote:  '$vote call',
-    endvote:   '$vote end',
-    unvote:    '$vote cancel',
-    swap:      '$vote swap',
-    stats:     '$vote stats',
-    list:      '$vote list',
-    generic:   '$vote',
+    callvote: '$vote call',
+    endvote: '$vote end',
+    unvote: '$vote cancel',
+    swap: '$vote swap',
+    stats: '$vote stats',
+    list: '$vote list',
+    generic: '$vote',
   };
 
   var tagPrefix = '#';
@@ -28,7 +28,7 @@ module.exports = function (core) {
 //  };
 
   function argsToArray(argsString) {
-    //http://stackoverflow.com/a/18647776/2178646
+    // http://stackoverflow.com/a/18647776/2178646
     var argsArray = argsString.match(/"[^"]+"|\s?\w+\s?/g);
 
     argsArray.forEach(function (arg, index, array) {
@@ -44,7 +44,6 @@ module.exports = function (core) {
     });
   }
 
-//*******************************************************************
   function pubListener(nick, text) {
     var args;
 
@@ -55,19 +54,18 @@ module.exports = function (core) {
       args = text.substring(callers.endvote.length);
       voteEnd(args, nick);
     } else if (core.util.beginsIgnoreCase(text, callers.unvote)) {
-      //args = text.substring(callers.unvote.length);
+      // args = text.substring(callers.unvote.length);
       core.irc.sayFmt('%s is unimplemented.', callers.unvote);
 
     } else if (core.util.beginsIgnoreCase(text, callers.stats)) {
-      //args = text.substring(callers.stats.length);
+      // args = text.substring(callers.stats.length);
       core.irc.sayFmt('%s is unimplemented.', callers.stats);
 
     } else if (core.util.beginsIgnoreCase(text, callers.list)) {
-      //No args on this one
+      // No args on this one
       core.irc.sayFmt('%s is unimplemented.', callers.list);
     }
   }
-//*******************************************************************
 
   function createOptionListener(pool) {
     return function (nick, text) {
@@ -76,7 +74,7 @@ module.exports = function (core) {
         if (pool.votes.hasOwnProperty(nick)) {
           if (core.util.eqIgnoreCase(pool.votes[nick],
               pool.options[optionIndex])) {
-            core.irc.sayFmt('%s : You\'ve already voted for this', nick);
+            core.irc.sayFmt("%s : You've already voted for this", nick);
           } else {
             pool.votes[nick] = pool.options[optionIndex];
             core.irc.sayFmt('%s changed his vote.', nick);
@@ -90,7 +88,7 @@ module.exports = function (core) {
   }
 
   function genericVoteCallback(pool) {
-    //Counting votes
+    // Counting votes
     var scoreboard = evaluateScore(pool);
     var winningIndex = scoreboard.indexOf(Math.max.apply(Math, scoreboard));
 
@@ -103,10 +101,10 @@ module.exports = function (core) {
   function voteCall(args, askerNick) {
     var tag, question, options;
 
-    //Check if first arg is a tag
+    // Check if first arg is a tag
     if (args[0].indexOf(tagPrefix) === 0) {
-      //Even if it is, we don't care.
-      //TODO The pool is a singleton. For now at least
+      // Even if it is, we don't care.
+      // TODO The pool is a singleton. For now at least
       tag = '';
       args.shift();
     } else {
@@ -115,7 +113,7 @@ module.exports = function (core) {
 
     if (openPools.length >= maxPools) {
       core.irc.sayFmt('No more pools can be opened,' +
-          ' we\'ve already reached the limit of %s.', maxPools);
+          " we\'ve already reached the limit of %s.", maxPools);
     } else {
 
       if (poolWithTagExists(tag)) {
@@ -148,7 +146,7 @@ module.exports = function (core) {
   }
 
   function voteEnd(args, nick) {
-	//TODO : Make it close the pool received in argument only.
+	// TODO : Make it close the pool received in argument only.
     openPools.forEach(function (pool) {
       core.irc.removeListener('pub', pool.listener);
       pool.callback(pool);
@@ -176,7 +174,7 @@ module.exports = function (core) {
   function evaluateScore(pool, optionKey) {
     var voteSelection;
     var optionIndex;
-	//http://stackoverflow.com/a/13735425/2178646
+	  // http://stackoverflow.com/a/13735425/2178646
     var scoreboard = Array.apply(null, new Array(pool.options.length))
         .map(Number.prototype.valueOf,0);
 
