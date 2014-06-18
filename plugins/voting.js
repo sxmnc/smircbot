@@ -89,39 +89,28 @@ module.exports = function (core) {
           return pool.options[idx];
         });
 
-    //Announcing winners
+    // Announcing winners
     if (Object.keys(pool.votes).length === 0) {
-        core.irc.sayPub('Nobody voted, the vote is cancelled.');
-      } else if (winners.length !== 1) {
-        core.irc.sayPub('The votes are in!');
-        if (winners.length === 2) {
-          core.irc.sayFmt('On the question of "%s", "%s" and "%s" are both tied' +
-              ' for victory, with %s votes' +
-              ' each', pool.question, winners[0],
-              winners[1], maxScore);
-        } else {
-          core.irc.sayFmt('On the question of "%s", all the following options' +
-        		  ' are tied for victory : "%s"', pool.question,
-        		  winners.join('", "'));
-        }
+      core.irc.sayPub('Nobody voted, the vote is cancelled.');
+    } else if (winners.length !== 1) {
+      core.irc.sayPub('The votes are in!');
+      if (winners.length === 2) {
+        core.irc.sayFmt('On the question of "%s", "%s" and "%s" are both tied' +
+            ' for victory, with %s votes' +
+            ' each', pool.question, winners[0],
+            winners[1], maxScore);
       } else {
-        core.irc.sayPub('The votes are in!');
-        core.irc.sayFmt('On the question of "%s" the winner is "%s" with a' +
-            ' total of %s votes.', pool.question,
-            winners[0], maxScore);
-
-    core.irc.sayPub('The votes are in!');
-
-    /*
-     
-    if (winners.length === 1) {
-      core.irc.sayFmt('On the question of "%s" the winner is "%s" with a ' +
-          'total of %s votes.', pool.question, winners[0], maxScore);
+        core.irc.sayFmt('On the question of "%s", all the following options' +
+            ' are tied for victory : "%s"', pool.question,
+            winners.join('", "'));
+      }
     } else {
-      core.irc.sayFmt('On the question of "%s" the winners are "%s" ' +
-          'with each a total of %s votes.',
-          pool.question, winners.join('", "'), maxScore);
-     */
+      core.irc.sayPub('The votes are in!');
+      core.irc.sayFmt('On the question of "%s" the winner is "%s" with a' +
+          ' total of %s votes.', pool.question,
+          winners[0], maxScore);
+
+      core.irc.sayPub('The votes are in!');
     }
   }
 
@@ -140,7 +129,7 @@ module.exports = function (core) {
 
     if (openPools.length >= maxPools) {
       core.irc.sayFmt('No more pools can be opened,' +
-          " we\'ve already reached the limit of %s.", maxPools);
+          " we've already reached the limit of %s.", maxPools);
     } else {
 
       if (poolWithTagExists(tag)) {
@@ -173,7 +162,7 @@ module.exports = function (core) {
   }
 
   function voteEnd(args, nick) {
-  // TODO : Make it close the pool received in argument only.
+    // TODO : Make it close the pool received in argument only.
     openPools.forEach(function (pool) {
       core.irc.removeListener('pub', pool.listener);
       pool.callback(pool);
