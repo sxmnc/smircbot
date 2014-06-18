@@ -80,12 +80,24 @@ module.exports = function (core) {
   function genericVoteCallback(pool) {
     // Counting votes
     var scoreboard = evaluateScore(pool);
-    var winningIndex = scoreboard.indexOf(Math.max.apply(Math, scoreboard));
+    var maxScore = _.max(scoreboard);
+    var winners = _.map(_.filter(scoreboard,
+        function (votes) {
+          return votes === maxScore;
+        }),
+        function (val, idx) {
+          return pool.options[idx];
+        });
 
     core.irc.sayPub('The votes are in!');
-    core.irc.sayFmt('On the question of \"%s\" the winner is \"%s\" with a' +
-        'total of %s votes.', pool.question, pool.options[winningIndex],
-        scoreboard[winningIndex]);
+    if (winners.length === 1) {
+      core.irc.sayFmt('On the question of "%s" the winner is "%s" with a ' +
+          'total of %s votes.', pool.question, winners[0], maxScore);
+    } else {
+      core.irc.sayFmt('On the question of "%s" the winners are "%s" ' +
+          'with each a total of %s votes.',
+          pool.question, winners.join('", "'), maxScore);
+    }
   }
 
   function voteCall(args, askerNick) {
@@ -110,7 +122,7 @@ module.exports = function (core) {
         if (tag === '') {
           core.irc.sayFmt('There is already a pool in the default slot,' +
               ' please specify a voting tag' +
-              ' (i.e : %s #myquestion \"Question\" awnsers) or' +
+              ' (i.e : %s #myquestion "Question" awnsers) or' +
               ' close the existing pool.', callers.callvote);
         } else {
           core.irc.sarFmt('There is already a pool using the tag %s,' +
@@ -124,7 +136,7 @@ module.exports = function (core) {
         var pool = newPool(tag, question, options, askerNick,
             genericVoteCallback);
 
-        core.irc.sayFmt('%s called for a vote : \"%s\"',
+        core.irc.sayFmt('%s called for a vote : "%s"',
             askerNick, pool.question);
         core.irc.sayFmt('The options are %s', pool.options.join(', '));
         core.irc.sayPub('Let the votes begin!');
