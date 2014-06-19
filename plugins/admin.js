@@ -42,7 +42,7 @@ module.exports = function (core) {
     if (core.util.beginsIgnoreCase(text, kickTrigger)) {
       var kickee = text.substring(kickTrigger.length);
       checkPerm(nick, function () {
-        if (core.util.beginsIgnoreCase(kickee, core.nickname)) {
+        if (core.util.eqIgnoreCase(kickee, core.nickname)) {
           core.irc.sayFmt(
               '%s: You are not allowed to kick me!', nick);
         } else if (nickIsAdmin(kickee)) {
