@@ -78,16 +78,20 @@ module.exports = function (core) {
   }
 
   function genericVoteCallback(pool) {
+	  
+    console.log('votes : ' + JSON.stringify(pool.votes));
+    console.log('Options : ' + pool.options);
+
     // Counting votes
     var scoreboard = evaluateScore(pool);
     var maxScore = _.max(scoreboard);
-    var winners = _.map(_.filter(scoreboard,
-        function (votes) {
-          return votes === maxScore;
-        }),
-        function (val, idx) {
-          return pool.options[idx];
-        });
+    var winners = _.map(_.filter(_.map(scoreboard,
+        function (v, i) { return [v === maxScore, pool.options[i]]; }),
+        function (v) { return v[0]; }),
+        function (v) { return v[1]; });
+    
+    console.log('Scoreboard : ' + scoreboard);
+    console.log('Winners : ' + winners);
 
     //Announcing winners
     if (Object.keys(pool.votes).length === 0) {
@@ -109,19 +113,6 @@ module.exports = function (core) {
         core.irc.sayFmt('On the question of "%s" the winner is "%s" with a' +
             ' total of %s votes.', pool.question,
             winners[0], maxScore);
-
-    core.irc.sayPub('The votes are in!');
-
-    /*
-     
-    if (winners.length === 1) {
-      core.irc.sayFmt('On the question of "%s" the winner is "%s" with a ' +
-          'total of %s votes.', pool.question, winners[0], maxScore);
-    } else {
-      core.irc.sayFmt('On the question of "%s" the winners are "%s" ' +
-          'with each a total of %s votes.',
-          pool.question, winners.join('", "'), maxScore);
-     */
     }
   }
 
