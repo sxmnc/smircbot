@@ -1,7 +1,12 @@
 var _ = require('lodash');
+var fmt = require('util').format;
 
 module.exports = function (core) {
   var plugin = {};
+
+  function reply(msg) {
+    setTimeout(function () { core.irc.sayPub(msg) }, _.random(500, 1500));
+  }
 
   function pubListener(nick, text) {
     var commaTrigger = core.nickname + ',';
@@ -10,9 +15,9 @@ module.exports = function (core) {
     var trimmed = text.trim();
 
     if (core.util.eqIgnoreCase(trimmed, commaTrigger)) {
-      core.irc.sayFmt('%s,', nick);
+      reply(fmt('%s,', nick));
     } else if (core.util.eqIgnoreCase(trimmed, colonTrigger)) {
-      core.irc.sayFmt('%s:', nick);
+      reply(fmt('%s:', nick));
     }
   }
 
