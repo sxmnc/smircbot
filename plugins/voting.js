@@ -17,17 +17,6 @@ module.exports = function (core) {
 
   var openPools = [];
 
-  function argsToArray(argsString) {
-    // http://stackoverflow.com/a/18647776/2178646
-    var argsArray = argsString.match(/"[^"]+"|\s?\w+\s?/g);
-
-    argsArray.forEach(function (arg, index, array) {
-      array[index] = arg.trim().replace(/"/g, '');
-    });
-
-    return argsArray;
-  }
-
   function poolWithTagExists(soughtTag) {
     return _.find (openPools, function (elem) {
       return elem.tag === soughtTag;
@@ -38,7 +27,7 @@ module.exports = function (core) {
     var args;
 
     if (core.util.beginsIgnoreCase(text, callers.callvote)) {
-      args = argsToArray(text.substring(callers.callvote.length));
+      args = core.util.argsToArray(text.substring(callers.callvote.length));
       voteCall(args, nick);
     } else if (core.util.beginsIgnoreCase(text, callers.endvote)) {
       args = text.substring(callers.endvote.length);

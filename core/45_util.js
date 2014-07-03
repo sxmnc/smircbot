@@ -15,5 +15,16 @@ module.exports = function (core) {
     containsIgnoreCase: function (a, b) {
       return a.toLowerCase().indexOf(b.toLowerCase()) !== -1;
     },
+
+    argsToArray: function(argsString) {
+      // http://stackoverflow.com/a/18647776/2178646
+      var argsArray = argsString.match(/"[^"]+"|\s?\w+\s?/g);
+
+      argsArray.forEach(function (arg, index, array) {
+        array[index] = arg.trim().replace(/"/g, '');
+      });
+
+      return argsArray;
+    }
   };
 };
