@@ -72,6 +72,9 @@ Set the bot's nickname with this method.
 #### core.irc.useNick(nick, function) :: `Function`
 Change the bot nickname for the specified one for the duration of the function.
 As of now, it is likely to cause issues if used with asynchronous tasks.
+#### core.utils.argsToArray(arrayString) :: `Function`
+Split the string on groups of whitespaces, unless the words are surrounded by double quotes, in which case they are considered as a single "word" and the result is stripped of its quotes.
+Returns an array containing the resulting elements.
 
 ---
 
