@@ -33,13 +33,10 @@ module.exports = function (core) {
   
   function sayQuote (quoteObject) {
     if(quoteObject.hasOwnProperty('quote')) {
-      core.irc.sayFmt('"%s" -%s, %s', quoteObject.quote, quoteObject.author,
-          quoteObject.timestamp);
-    } else if(quoteObject.hasOwnProperty('link')) {
-      core.irc.sayPub(quoteObject.link);
+      core.irc.sayPub(quoteObject.quote);
     } else {
-      core.irc.sayFmt('An entry tagged "%s" exists, but is neither a quote or' +
-          ' a link.', quoteObject.tag);
+      core.irc.sayFmt('An entry tagged "%s" exists, but does not have' +
+          ' any text associated with it.', quoteObject.tag);
     }
     
   }
