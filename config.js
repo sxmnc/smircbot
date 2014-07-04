@@ -59,13 +59,27 @@ module.exports = {
   ],
   
   quotes: [
-    '"C\'est parce que c\'Est pas du loli rape" - kiniamaro 2014',
-    '"ouais, I\'m not letting it die, c\'est mon dernier mac à vie" - alxgnon 2014',
-    'http://i.imgur.com/0CW6W7t.jpg',
-    '"the bot is broken" - everyone 2014',
-    '"Check ben comment j\'installe Arch en 30 minutes!" - MrJudgemental 2014',
-    'http://pastebin.com/BrtTPvXT',
-    '"En arrière de la biblio municipale" - SBSTP 2014',
-    '"moi j\'aime bien grab des petites filles defois" - alxgnon 2014',
+    {
+      key: 'loli',
+      quote: '"C\'est parce que c\'est pas du loli rape" -kiniamaro 2014',
+    }, {
+      key: 'mac',
+      quote: '"ouais, I\'m not letting it die, c\'est mon dernier mac à vie" -alxgnon 2014'
+    }, {
+      key: 'arch',
+      quote: '"Check ben comment j\'installe Arch en 30 minutes!" -MrJudgemental 2014'
+    }, {
+      key: 'biblio',
+      quote: '"En arrière de la biblio municipale" -SBSTP 2014',
+    }, {
+      key: 'broken',
+      quote: 'The bot is broken! -everyone 2014',
+    }, {
+      key: 'rodric',
+      quote: 'http://i.imgur.com/0CW6W7t.jpg'
+    }, {
+      key: 'lookingformaniac',
+      quote: 'http://pastebin.com/BrtTPvXT'
+    }
   ],
 };
