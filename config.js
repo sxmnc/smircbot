@@ -15,6 +15,8 @@ module.exports = {
   translateApiKey: '********',
   weatherApiKey: '********',
 
+  weekly: undefined,
+
   admins: [
     'alxgnon',
     'SBSTP',
