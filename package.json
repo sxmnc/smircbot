@@ -14,7 +14,8 @@
     "moment": "2.6.x",
     "request": "2.34.x",
     "entities": "1.1.x",
-    "mathjs": "0.22.x"
+    "mathjs": "0.22.x",
+    "xregexp": "2.0.x"
   },
   "devDependencies": {
     "grunt": "0.4.x",
