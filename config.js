@@ -82,6 +82,9 @@ module.exports = {
     }, {
       key: 'lookingformaniac',
       quote: 'http://pastebin.com/BrtTPvXT'
-    }
+    }, {
+      key: 'nonsense',
+      quote: '"tu me faire un debian pi un avec un pingouin du si vx" - SBSTP 2014'
+    },
   ],
 };
