@@ -53,6 +53,9 @@ Check if two strings are equal, while ignoring case.
 Check if string `a` begins with string `b`, while ignoring case.
 #### core.util.containsIgnoreCase(a, b) :: `Function -> Boolean`
 Check if string `a` contains string `b`, while ignoring case.
+#### core.util.argsToArray(arrayString) :: `Function -> Array`
+Split the string on groups of whitespaces, unless the words are surrounded by double quotes, in which case they are considered as a single "word" and the result is stripped of its quotes.
+Returns an array containing the resulting elements.
 
 ---
 
@@ -72,9 +75,6 @@ Set the bot's nickname with this method.
 #### core.irc.useNick(nick, function) :: `Function`
 Change the bot nickname for the specified one for the duration of the function.
 As of now, it is likely to cause issues if used with asynchronous tasks.
-#### core.utils.argsToArray(arrayString) :: `Function`
-Split the string on groups of whitespaces, unless the words are surrounded by double quotes, in which case they are considered as a single "word" and the result is stripped of its quotes.
-Returns an array containing the resulting elements.
 
 ---
 
