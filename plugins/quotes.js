@@ -4,7 +4,7 @@ module.exports = function (core) {
   var plugin = {};
 
   var trigger = '$quotes';
-  
+
   plugin.help = {
     quotes: '$quotes\n' +
         'Display a random famous quote from the #SexManiac users',
@@ -18,27 +18,26 @@ module.exports = function (core) {
         var selectedItem = core.config.quotes[selectedIndex];
         sayQuote(selectedItem);
       } else {
-        var quoteItem = _.find(core.config.quotes, function(elem) {
-          return elem.key == arg.trim();
+        var quoteItem = _.find(core.config.quotes, function (elem) {
+          return elem.key === arg.trim();
         });
 
-        if(quoteItem === undefined) {
+        if (quoteItem === undefined) {
           core.irc.sayFmt('No quote tagged "%s"', arg);
-        } else {       
+        } else {
           sayQuote(quoteItem);
         }
       }
     }
   }
-  
-  function sayQuote (quoteObject) {
-    if(quoteObject.hasOwnProperty('quote')) {
+
+  function sayQuote(quoteObject) {
+    if (quoteObject.hasOwnProperty('quote')) {
       core.irc.sayPub(quoteObject.quote);
     } else {
       core.irc.sayFmt('An entry tagged "%s" exists, but does not have' +
           ' any text associated with it.', quoteObject.tag);
     }
-    
   }
 
   plugin.load = function () {

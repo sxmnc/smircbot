@@ -20,7 +20,8 @@ module.exports = function (core) {
         json: true,
       }, function (err, response, body) {
         if (!err) {
-          if (body['result_type'] === 'exact') {
+          var resultType = 'result_type';
+          if (body[resultType] === 'exact') {
             var def = body.list[0].definition;
             var example = body.list[0].example;
             core.irc.sayFmt('Definition: %s | ex: %s', def, example);

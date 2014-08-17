@@ -5,7 +5,9 @@ module.exports = function (core) {
   var plugin = {};
 
   function reply(msg) {
-    setTimeout(function () { core.irc.sayPub(msg) }, _.random(500, 1500));
+    setTimeout(function () {
+      core.irc.sayPub(msg);
+    }, _.random(500, 1500));
   }
 
   function pubListener(nick, text) {

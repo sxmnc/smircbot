@@ -67,7 +67,6 @@ module.exports = function (core) {
   }
 
   function genericVoteCallback(pool) {
-	  
     console.log('votes : ' + JSON.stringify(pool.votes));
     console.log('Options : ' + pool.options);
 
@@ -78,7 +77,7 @@ module.exports = function (core) {
         function (v, i) { return [v === maxScore, pool.options[i]]; }),
         function (v) { return v[0]; }),
         function (v) { return v[1]; });
-    
+
     console.log('Scoreboard : ' + scoreboard);
     console.log('Winners : ' + winners);
 
