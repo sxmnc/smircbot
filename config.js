@@ -15,8 +15,6 @@ module.exports = {
   translateApiKey: '********',
   weatherApiKey: '********',
 
-  weekly: undefined,
-
   admins: [
     'alxgnon',
     'SBSTP',
@@ -25,6 +23,7 @@ module.exports = {
     'DrFoliberg',
     'MrJudgemental',
     'PetitPrince',
+    'seiyria',
     'smlogger',
   ],
 
@@ -59,7 +58,7 @@ module.exports = {
     "my precious",
     "I'm the king of the world!",
   ],
-  
+
   quotes: [
     {
       key: 'loli',
