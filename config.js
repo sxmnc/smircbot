@@ -84,6 +84,9 @@ module.exports = {
     }, {
       key: 'nonsense',
       quote: '"tu me faire un debian pi un avec un pingouin du si vx" - SBSTP 2014'
+    }, {
+      key: 'irc',
+      quote: '"ça me tente pas d\'attendre sur l\'irc" - DrFoliberg 2014'
     },
   ],
 };
