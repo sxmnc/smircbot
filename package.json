@@ -15,7 +15,8 @@
     "request": "2.34.x",
     "entities": "1.1.x",
     "mathjs": "0.22.x",
-    "xregexp": "2.0.x"
+    "xregexp": "2.0.x",
+    "xml2js": "0.4.x"
   },
   "devDependencies": {
     "grunt": "0.4.x",
