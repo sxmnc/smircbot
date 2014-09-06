@@ -17,8 +17,17 @@ module.exports = function (core) {
     if (_.contains(text, triggers.lilheart)) {
       core.irc.sayPub('#nohomo');
     } else if (text == triggers.nose) {
-      if(_.random(100) >= 80)
-        core.irc.sayPub('THE TROLL STRUCK AGAIN');
+      core.irc.sayPub('THE TROLL STRUCK AGAIN');
+      if (_.random(1) === 0) {
+        if (_.random(4) === 0) {
+          core.irc.sayPub('False story');
+        } else {
+          core.irc.sayPub('True story');
+        }
+      }
+      if (_.random(1) === 0) {
+        core.irc.sayPub('TROLOLO');
+      }
     } else if (core.util.eqIgnoreCase(text, callers.beke)) {
       core.irc.useNick('KwameBeke', function () {
         core.irc.sayPub('Hé hé hé...');
