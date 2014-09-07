@@ -13,17 +13,24 @@ module.exports = function (core) {
   function pubListener (nick, text) {
     if(core.util.beginsIgnoreCase(text, trigger)) {
       var station = text.substring(trigger.length);
-      console.log(station);
       request('http://somafm.com/channels.xml', function (error, response, body) {
         if(!error && response.statusCode == 200) {
-          xml2js(body, function (err, result) {
-            console.log(results + ""); 
-          });
+            xml2js.parseString(body, function (err, result) {
+              for (channel in result.channels.channel){
+                if (result.channels.channel[channel].$.id == station){
+                  console.log('stuff');
+                  var lastPlay = result.channels.channel[channel].lastPlaying[0];
+                  core.irc.sayPub('http://somafm.com/play/' + station + ' : now playing -> ' + lastPlay);
+                  return;
+                }
+              }
+              core.irc.sayPub('no station "' + station + '" found.');
+            }); 
+          }
 
-        }
-      })
+        });
+      }
     }
-  }
   
   plugin.load = function () {
     core.irc.on('pub', pubListener);
