@@ -19,7 +19,6 @@ module.exports = function (core) {
             xml2js.parseString(body, function (err, result) {
               for (channel in result.channels.channel){ 
                 if (result.channels.channel[channel].$.id == station){
-                  console.log('stuff');
                   var lastPlay = result.channels.channel[channel].lastPlaying[0];
                   core.irc.sayPub('http://somafm.com/play/' + station + ' : now playing -> ' + lastPlay);
                   return;
