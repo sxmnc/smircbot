@@ -5,18 +5,19 @@ module.exports = function (core) {
   var plugin = {};
 
   plugin.help = {
-    soma: '$soma [station]\n' +
+    soma: '$somafm [station]\n' +
           'returns the current track playing on the station',
   };
-  var trigger = '$soma ';
+  var trigger = '$somafm ';
 
   function pubListener (nick, text) {
     if(core.util.beginsIgnoreCase(text, trigger)) {
       var station = text.substring(trigger.length);
       request('http://somafm.com/channels.xml', function (error, response, body) {
         if(!error && response.statusCode == 200) {
+            // this whole thing is a mess, blame somafm for using xml
             xml2js.parseString(body, function (err, result) {
-              for (channel in result.channels.channel){
+              for (channel in result.channels.channel){ 
                 if (result.channels.channel[channel].$.id == station){
                   console.log('stuff');
                   var lastPlay = result.channels.channel[channel].lastPlaying[0];
@@ -27,7 +28,6 @@ module.exports = function (core) {
               core.irc.sayPub('no station "' + station + '" found.');
             }); 
           }
-
         });
       }
     }
