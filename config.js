@@ -87,6 +87,9 @@ module.exports = {
     }, {
       key: 'irc',
       quote: '"ça me tente pas d\'attendre sur l\'irc" - DrFoliberg 2014'
-    },
+    }, {
+      key: 'grab',
+      quote: '"moi j\'aime bien grab des petites filles defois" - alxgnon 2014'
+    }
   ],
 };
