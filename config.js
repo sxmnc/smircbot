@@ -90,6 +90,10 @@ module.exports = {
     }, {
       key: 'grab',
       quote: '"moi j\'aime bien grab des petites filles defois" - alxgnon 2014'
+    }, {
+      key: 'java',
+      quote: '"laissez moi faire du java criss" - DrFoliberg 2014'
     }
+    
   ],
 };
