@@ -93,7 +93,9 @@ module.exports = {
     }, {
       key: 'java',
       quote: '"laissez moi faire du java criss" - DrFoliberg 2014'
+    }, {
+      key: 'drugs',
+      quote: '"Alright I taking drugs" - Maro-kun 2015'
     }
-    
   ],
 };
