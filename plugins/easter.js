@@ -7,17 +7,17 @@ module.exports = function (core) {
     lucario: '$lucario',
     beke: '$beke',
   };
-
+ //   
   var triggers = {
     lilheart: '<3',
     nose: ':^)',
   };
 
   function pubListener(nick, text) {
-    if (_.contains(text, triggers.lilheart)) {
-      core.irc.sayPub('#nohomo');
+	if (_.contains(text, triggers.lilheart)) {
+                core.irc.sayPub('#nohomo');
     } else if (text == triggers.nose) {
-      core.irc.sayPub('THE TROLL STRUCK AGAIN');
+               core.irc.sayPub('THE TROLL STRUCK AGAIN');
       if (_.random(1) === 0) {
         if (_.random(4) === 0) {
           core.irc.sayPub('False story');
@@ -29,8 +29,8 @@ module.exports = function (core) {
         core.irc.sayPub('TROLOLO');
       }
     } else if (core.util.eqIgnoreCase(text, callers.beke)) {
-      core.irc.useNick('KwameBeke', function () {
-        core.irc.sayPub('Hé hé hé...');
+core.irc.useNick('KwameBeke', function () {
+				core.irc.sayPub('Hé hé hé...');
       });
     } else if (core.util.eqIgnoreCase(text, callers.lucario)) {
       core.irc.sayPub('The bot cannot do Lucario. Lucario is way too sexy.');

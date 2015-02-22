@@ -13,7 +13,7 @@ module.exports = function (core) {
   function pubListener(nick, text) {
     var trigger = '$help ';
 
-    if (core.util.beginsIgnoreCase(text, trigger)) {
+	if (core.util.beginsIgnoreCase(text, trigger)) {
       var topic = text.substring(trigger.length);
       var help = null;
       _.find(core.plugins, function (plugin) {
@@ -21,12 +21,11 @@ module.exports = function (core) {
           help = plugin.help[topic];
           return true;
         }
-      });
-      if (help) {
+ //       });
         core.irc.say(nick, fmt('help %s: %s', topic, help));
       } else {
         core.irc.say(nick, fmt('help %s: No help found.', topic));
-      }
+               }
     }
   }
 
