@@ -1,5 +1,4 @@
 var request = require('request');
-
 module.exports = function (core) {
   var plugin = {};
 
@@ -26,14 +25,13 @@ module.exports = function (core) {
             var example = body.list[0].example;
             core.irc.sayFmt('Definition: %s | ex: %s', def, example);
           } else {
-            core.irc.sayFmt('Term not found.');
+             core.irc.sayFmt('Term not found.');
           }
         }
       });
     }
   }
-
-  plugin.load = function () {
+		  plugin.load = function () {
     core.irc.on('pub', pubListener);
   };
 
@@ -42,4 +40,4 @@ module.exports = function (core) {
   };
 
   return plugin;
-};
+					};

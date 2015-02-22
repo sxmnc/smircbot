@@ -16,7 +16,7 @@ module.exports = function (core) {
     core.nickname,
     {
       port: core.port,
-      realName: core.realname,
+              realName: core.realname,
       channels: [core.channel],
     }
   );
@@ -36,11 +36,10 @@ module.exports = function (core) {
   };
 
   // Emit 'pub' event when a message is sent on the channel the bot
-  // is listening to.
+// is listening to.
   core.irc.on('message' + core.channel, function (nick, text, msg) {
     this.emit('pub', nick, text, msg);
   });
-
   // Shorthand method to say messages on the bot's own server.
   core.irc.sayPub = function (msg) {
     this.say(core.channel, msg);
@@ -50,14 +49,13 @@ module.exports = function (core) {
   core.irc.sayFmt = function () {
     this.say(core.channel, fmt.apply(null, arguments));
   };
-
-  // Send a NICK command and also set core.nickname.
+            // Send a NICK command and also set core.nickname.
   core.irc.setNick = function (nick) {
     this.send('nick', nick);
-    core.nickname = nick;
+  //      core.nickname = nick;
   };
 
-  // Uses the specified nick for the duration of the specified function
+        // Uses the specified nick for the duration of the specified function
   core.irc.useNick = function (tmpNick, task) {
     var originalNick = core.nickname;
     this.send('nick', tmpNick);
@@ -67,7 +65,7 @@ module.exports = function (core) {
     core.nickname = originalNick;
   };
 
-  // Check if a message is about a identify command suceeding.
+		// Check if a message is about a identify command suceeding.
   function identifySuccess(msg) {
     return msg.nick &&
         core.util.eqIgnoreCase(msg.nick, 'nickserv') &&
@@ -84,15 +82,14 @@ module.exports = function (core) {
   }
 
   if (core.password) {
-    // Identify with password on channel join.
-    core.irc.on('raw', function (msg) {
+        // Identify with password on channel join.
+core.irc.on('raw', function (msg) {
       if (msg.rawCommand === core.rpl.endofmotd) {
         this.send('privmsg', 'nickserv',
             fmt('identify %s %s', core.nickname, core.password));
       }
-    });
-
-    // Ghost anyone currently using our nickname when identified.
+ });
+		     //     // Ghost anyone currently using our nickname when identified.
     core.irc.on('raw', function (msg) {
       if (identifySuccess(msg)) {
         this.send('privmsg', 'nickserv',
@@ -105,10 +102,9 @@ module.exports = function (core) {
       if (ghostingSuccess(msg)) {
         this.send('nick', core.nickname);
       }
-    });
+     });
   }
-
-  if (core.operator) {
+          if (core.operator) {
     // Request operator status when identified.
     core.irc.on('raw', function (msg) {
       if (identifySuccess(msg)) {
@@ -119,9 +115,9 @@ module.exports = function (core) {
 
     // Request operator status when imposters have been ghosted.
     core.irc.on('raw', function (msg) {
-      if (ghostingSuccess(msg)) {
+				if (ghostingSuccess(msg)) {
         this.send('privmsg', 'chanserv',
-            fmt('op %s %s', core.channel, core.nickname));
+     //              fmt('op %s %s', core.channel, core.nickname));
       }
     });
   }

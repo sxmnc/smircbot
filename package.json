@@ -14,7 +14,6 @@
     "moment": "2.6.x",
     "request": "2.34.x",
     "entities": "1.1.x",
-    "mathjs": "0.22.x",
     "xregexp": "2.0.x",
     "xml2js": "0.4.x"
   },
@@ -23,5 +22,5 @@
     "grunt-contrib-jshint": "0.10.x",
     "grunt-jscs-checker": "0.4.x",
     "jscs-trailing-comma": "0.1.x"
-  }
-}
+       }
+			}
