@@ -15,6 +15,7 @@ module.exports = function (core) {
     core.server,
     core.nickname,
     {
+      password: core.password,
       port: core.port,
       realName: core.realname,
       channels: [core.channel],
@@ -84,14 +85,6 @@ module.exports = function (core) {
   }
 
   if (core.password) {
-    // Identify with password on channel join.
-    core.irc.on('raw', function (msg) {
-      if (msg.rawCommand === core.rpl.endofmotd) {
-        this.send('privmsg', 'nickserv',
-            fmt('identify %s %s', core.nickname, core.password));
-      }
-    });
-
     // Ghost anyone currently using our nickname when identified.
     core.irc.on('raw', function (msg) {
       if (identifySuccess(msg)) {
