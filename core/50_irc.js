@@ -100,22 +100,4 @@ module.exports = function (core) {
       }
     });
   }
-
-  if (core.operator) {
-    // Request operator status when identified.
-    core.irc.on('raw', function (msg) {
-      if (identifySuccess(msg)) {
-        this.send('privmsg', 'chanserv',
-            fmt('op %s %s', core.channel, core.nickname));
-      }
-    });
-
-    // Request operator status when imposters have been ghosted.
-    core.irc.on('raw', function (msg) {
-      if (ghostingSuccess(msg)) {
-        this.send('privmsg', 'chanserv',
-            fmt('op %s %s', core.channel, core.nickname));
-      }
-    });
-  }
 };
