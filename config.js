@@ -96,6 +96,9 @@ module.exports = {
     }, {
       key: 'drugs',
       quote: '"Alright I taking drugs" - Maro-kun 2015'
-    }
+    }, {
+      key: '16',
+      quote: '"non fadrait que seize ans messemble c\'est faisable" - Maro-kun 2015',
+    },
   ],
 };
