@@ -102,6 +102,9 @@ module.exports = {
     }, {
       key: 'cul',
       quote: '"Entk, moi j\'aime juste les culs de gars." - petitprince 2015',
+    }, {
+      key: 'lesbien',
+      quote: '"I NEVER NEVER WAS A lesbien" - Maro-Kun 2015',
     },
   ],
 };
