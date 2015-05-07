@@ -7,16 +7,17 @@
     "url": "https://github.com/alxgnon/smircbot"
   },
   "dependencies": {
+    "entities": "1.1.x",
     "glob": "3.2.x",
     "irc": "0.3.x",
     "lodash": "2.4.x",
-    "node-watch": "0.3.x",
-    "moment": "2.6.x",
-    "request": "2.34.x",
-    "entities": "1.1.x",
     "mathjs": "0.22.x",
-    "xregexp": "2.0.x",
-    "xml2js": "0.4.x"
+    "moment": "2.6.x",
+    "node-watch": "0.3.x",
+    "request": "2.34.x",
+    "tough-cookie": "^1.1.0",
+    "xml2js": "0.4.x",
+    "xregexp": "2.0.x"
   },
   "devDependencies": {
     "grunt": "0.4.x",

@@ -8,11 +8,31 @@ module.exports = function (core) {
     var match = text.match(/\bhttps?:\/\/[^\s]+\b/g);
     if (match) {
       var url = match[0];
-      request.get(url, function (err, res, body) {
+      var r = request.defaults({jar: true});
+      r.get(url, function (err, res, body) {
         if (!err && res.statusCode === 200) {
           var result = /<title>\s*(.+)\s*<\/title>/.exec(body);
           if (result && result.length === 2 && result[1]) {
-            core.irc.sayFmt('link: %s', entities.decodeHTML(result[1]));
+            if (result[1] === "Login :: What.CD") {
+              r.post({
+                url: 'https://what.cd/login.php',
+                followAllRedirects: true,
+                form: {
+                  username: core.config.whatcd.username,
+                  password: core.config.whatcd.password,
+                  login: 'Log in',
+                }
+              }, function (err, res, body) {
+                if (!err && res.statusCode === 200) {
+                  var result = /<title>\s*(.+)\s*<\/title>/.exec(body);
+                  if (result && result.length === 2 && result[1]) {
+                    core.irc.sayFmt('link: %s', entities.decodeHTML(result[1]));
+                  }
+                }
+              });
+            } else {
+              core.irc.sayFmt('link: %s', entities.decodeHTML(result[1]));
+            }
           }
         }
       });
