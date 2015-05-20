@@ -105,6 +105,9 @@ module.exports = {
     }, {
       key: 'lesbien',
       quote: '"I NEVER NEVER WAS A lesbien" - Maro-Kun 2015',
+    }, {
+      key: '<3 java',
+      quote: '"<3 java" - maxdup 2015',
     },
   ],
 };
