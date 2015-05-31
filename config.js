@@ -108,6 +108,9 @@ module.exports = {
     }, {
       key: '<3 java',
       quote: '"<3 java" - maxdup 2015',
+    }, {
+      key: 'privé',
+      quote: '"comment tu as eu ca?? c\'est tres privé !!!!" - danou_ 2015',
     },
   ],
 };
