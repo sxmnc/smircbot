@@ -111,6 +111,9 @@ module.exports = {
     }, {
       key: 'privé',
       quote: '"comment tu as eu ca?? c\'est tres privé !!!!" - danou_ 2015',
+    }, {
+      key: 'snake',
+      quote: '"Dude, I\'d fuck that snake raw" - FifteenIsForShow 2015',
     },
   ],
 };
