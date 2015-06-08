@@ -84,8 +84,8 @@ module.exports = function (core) {
   }
 
   // Check if a message matches an error code
-  function verifyError(msg, errorId){
-    //Somehow, the error event isn't fired for all errors
+  function verifyError(msg, errorId) {
+    // Somehow, the error event isn't fired for all errors
     var pmError = msg.commandType == 'normal' &&
         msg.prefix.match(/\w+\.freenode\.net/) &&
         msg.rawCommand == errorId;
@@ -116,8 +116,10 @@ module.exports = function (core) {
       if(verifyError(msg, core.err.nicktoofast)) {
         clearTimeout(nickAbuseTimeout);
         console.log("Nick abuse timout reset.")
-        nickAbuseTimeout = setTimeout(function(){core.irc.setNick(msg.args[2])}, 21000);
-      } else if(verifyError(msg, core.err.nicknameinuse)) {
+        nickAbuseTimeout = setTimeout(function () {
+          core.irc.setNick(msg.args[2]);
+        }, 21000);
+      } else if (verifyError(msg, core.err.nicknameinuse)) {
         this.send('privmsg', 'nickserv', fmt('ghost %s', msg.args[1]));
       }
     });
