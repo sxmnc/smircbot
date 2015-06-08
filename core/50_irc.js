@@ -35,6 +35,8 @@ module.exports = function (core) {
     this.on(type, newListener);
   };
 
+  var nickAbuseTimeout;
+
   // Emit 'pub' event when a message is sent on the channel the bot
   // is listening to.
   core.irc.on('message' + core.channel, function (nick, text, msg) {
@@ -60,11 +62,9 @@ module.exports = function (core) {
   // Uses the specified nick for the duration of the specified function
   core.irc.useNick = function (tmpNick, task) {
     var originalNick = core.nickname;
-    this.send('nick', tmpNick);
-    core.nickname = tmpNick;
+    core.irc.setNick(tmpNick);
     task();
-    this.send('nick', originalNick);
-    core.nickname = originalNick;
+    core.irc.setNick(originalNick);
   };
 
   // Check if a message is about a identify command suceeding.
@@ -83,6 +83,17 @@ module.exports = function (core) {
         _.contains(msg.args[1], 'ghosted');
   }
 
+  // Check if a message matches an error code
+  function verifyError(msg, errorId){
+    //Somehow, the error event isn't fired for all errors
+    var pmError = msg.commandType == 'normal' &&
+        msg.prefix.match(/\w+\.freenode\.net/) &&
+        msg.rawCommand == errorId;
+    var realError = msg.commandType == "error" &&
+        msg.rawCommand == errorId;
+    return pmError || realError;
+  }
+
   if (core.password) {
     // Identify with password on channel join.
     core.irc.on('raw', function (msg) {
@@ -97,6 +108,17 @@ module.exports = function (core) {
       if (identifySuccess(msg)) {
         this.send('privmsg', 'nickserv',
             fmt('ghost %s', core.nickname));
+      }
+    });
+
+    // Take measures if a name change returns an error.
+    core.irc.on('raw', function (msg) {
+      if(verifyError(msg, core.err.nicktoofast)) {
+        clearTimeout(nickAbuseTimeout);
+        console.log("Nick abuse timout reset.")
+        nickAbuseTimeout = setTimeout(function(){core.irc.setNick(msg.args[2])}, 21000);
+      } else if(verifyError(msg, core.err.nicknameinuse)) {
+        this.send('privmsg', 'nickserv', fmt('ghost %s', msg.args[1]));
       }
     });
 
