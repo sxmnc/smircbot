@@ -65,31 +65,40 @@ module.exports = function (core) {
   // Sends a command and waits for a broadcast or a reply to confirm it.
   core.irc.sendRSVP = function (command, goodReplies, badReplies, maxDelay) {
     var args = Array.prototype.slice.call(arguments);
+    var self = this;
   
     var msgPromise = new Promise (
       function (resolve, reject) {
-        this.send.apply(this, args.slice(4).unshift(command));
-        console.log("**********Command sent : " + command)
+        try {
+          var sendArgs = args.slice(4);
+          sendArgs.unshift(command);
+          self.send.apply(self, sendArgs);
+        } catch (e) {
+          console.log(e);
+        }
         
-        core.irc.on('raw', function listener(msg) {
-          console.log("*************Got potential reply : " + msg.rawCommand);
+        var timeout;
+        var listener = function (msg) {
           var numCode = msg.rawCommand;
-          var isBroadcast = _.contains(core.broadcast, numcode);
+          var isBroadcast = _.contains(core.broadcast, numCode);
           
           //Check if bot is the sender of that broadcast. 
           if (!isBroadcast || isBroadcast && msg.nick == core.nickname) {
             if (_.contains(goodReplies, numCode)) {
+              clearTimeout(timeout);
               core.irc.removeListener('raw', listener);
               resolve();
             } else if (_.contains(badReplies, numCode)) {
+              clearTimeout(timeout);
               core.irc.removeListener('raw', listener);
-              reject();
+              reject(msg);
             }
           }
-        });
+        }
+        
+        core.irc.on('raw', listener);
 
-        setTimeout(function () {
-          console.log("************Reply timed out.")
+        timeout = setTimeout(function () {
           core.irc.removeListener('raw', listener);
           reject();
         }, maxDelay);
@@ -98,25 +107,33 @@ module.exports = function (core) {
     
     return msgPromise;
   }
-  
-  //"NICK" (good), "433" (bad), "438" (bad)
 
   // Send a NICK command and also set core.nickname.
-//  core.irc.setNick = function (nick) {
-//    this.sendRSVP('nick', ['NICK'], [core.err.nicknameinuse, core.err.nicktoofast], 3000, nick)
-//        .then(console.log("SUCCESS!!!!"));
-//    this.send('nick', nick);
-//    core.nickname = nick;
-//  };
+  core.irc.setNick = function (newNick) {
+    return this.sendRSVP('nick',
+        ['NICK'],
+        [core.err.nicknameinuse, core.err.nicktoofast],
+        3000, newNick)
+        .then(
+            function () {core.nickname = newNick},
+            function (msg) {
+              if (msg !== "undefined") {
+                console.log("Ghosting and shit.")
+              } else {
+                console.log("Reply timed out.")
+              }
+            }
+        );
+  };
 
   // Uses the specified nick for the duration of the specified function
   core.irc.useNick = function (tmpNick, task) {
-//    core.irc.setNick(tmpNick);
-    this.sendRSVP('nick', ['NICK'], [core.err.nicknameinuse, core.err.nicktoofast], 3000, tmpnick)
-      .then(function () {console.log("SUCCESS!!!!")});
-//    task();
-//    core.irc.setNick(originalNick);
-  };
+    var originalNick = core.nickname;
+    core.irc.setNick(tmpNick).then(function () {
+      task();
+      core.irc.setNick(originalNick);
+    });
+  }
 
   // Check if a message is about a identify command suceeding.
   function identifySuccess(msg) {
