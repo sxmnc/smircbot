@@ -5,6 +5,23 @@
 // Some of these codes are freenode specific. They come from ircd-seven.
 
 module.exports = function (core) {
+  // Commands the whole channel gets notified about (Even a if the channel is you)
+  // You must check if the sender (msg.nick) is you.
+  core.broadcast = [
+    'NICK',
+    'MODE',
+    'KICK',
+    'PRIVMSG',
+    'TOPIC',
+  ];
+  
+  // Commands you alone are going to see
+  core.priv = [
+    'NOTICE',
+    'PING',
+    'INVITE',
+  ]
+
   core.rpl = {
     welcome: '001',
     yourhost: '002',
