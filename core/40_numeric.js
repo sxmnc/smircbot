@@ -13,6 +13,7 @@ module.exports = function (core) {
     'KICK',
     'PRIVMSG',
     'TOPIC',
+    'QUIT'
   ];
   
   // Commands you alone are going to see
