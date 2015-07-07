@@ -20,7 +20,7 @@ module.exports = function (core) {
       var expr = text.substring(mathTrigger.length);
       try {
         var result = parser.eval(expr);
-        core.irc.sayFmt('result: %s', math.format(result));
+        core.irc.sayFmt('result: %s', math.format(result, {notation: 'fixed'}));
       } catch (err) {
         core.irc.sayPub(err);
       }
