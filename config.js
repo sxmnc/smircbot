@@ -21,18 +21,6 @@ module.exports = {
   //    database: "BigDataAnalytics",
   //},
 
-  admins: [
-    'alxgnon',
-    'SBSTP',
-    'Kiniamar0',
-    'kiniamaro',
-    'DrFoliberg',
-    'MrJudgemental',
-    'PetitPrince',
-    'seiyria',
-    'smlogger',
-  ],
-
   typist: [
     "the quick brown fox jumps over the lazy dog",
     "moonlight drowns out all but the brightest stars",
