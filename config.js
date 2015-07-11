@@ -7,13 +7,19 @@ module.exports = {
     nickname: 'smircbot',
     realname: '#SexManiac IRC bot',
     password: '********',
-    operator: true,
 
     debug: true,
   },
 
   translateApiKey: '********',
   weatherApiKey: '********',
+
+  //mysql: {
+  //    connectionLimit: 10,
+  //    host: "localhost",
+  //    user: "root",
+  //    database: "BigDataAnalytics",
+  //},
 
   admins: [
     'alxgnon',
