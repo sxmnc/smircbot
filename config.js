@@ -56,19 +56,19 @@ module.exports = {
     quotes: [
         {
             key: "loli",
-            quote: "\"C'est parce que c'est pas du loli rape\" -kiniamaro 2014",
+            quote: "\"C'est parce que c'est pas du loli rape\" - kiniamaro 2014",
         }, {
             key: "mac",
-            quote: "\"ouais, I'm not letting it die, c'est mon dernier mac à vie\" -alxgnon 2014",
+            quote: "\"ouais, I'm not letting it die, c'est mon dernier mac à vie\" - alxgnon 2014",
         }, {
             key: "arch",
-            quote: "\"Check ben comment j'installe Arch en 30 minutes!\" -MrJudgemental 2014",
+            quote: "\"Check ben comment j'installe Arch en 30 minutes!\" - MrJudgemental 2014",
         }, {
             key: "biblio",
-            quote: "\"En arrière de la biblio municipale\" -SBSTP 2014",
+            quote: "\"En arrière de la biblio municipale\" - SBSTP 2014",
         }, {
             key: "broken",
-            quote: "\"The bot is broken!\" -everyone 2014",
+            quote: "\"The bot is broken!\" - everyone 2014",
         }, {
             key: "rodric",
             quote: "http://i.imgur.com/0CW6W7t.jpg",
