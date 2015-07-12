@@ -1,18 +1,18 @@
 module.exports = {
   core: {
-    server: 'irc.freenode.net',
+    server: "irc.freenode.net",
     port: 6667,
-    channel: '#SexManiac',
+    channel: "#SexManiac",
 
-    nickname: 'smircbot',
-    realname: '#SexManiac IRC bot',
-    password: '********',
+    nickname: "smircbot",
+    realname: "#SexManiac IRC bot",
+    password: "********",
 
     debug: true,
   },
 
-  translateApiKey: '********',
-  weatherApiKey: '********',
+  translateApiKey: "********",
+  weatherApiKey: "********",
 
   //mysql: {
   //    connectionLimit: 10,
@@ -55,59 +55,59 @@ module.exports = {
 
   quotes: [
     {
-      key: 'loli',
-      quote: '"C\'est parce que c\'est pas du loli rape" -kiniamaro 2014',
+      key: "loli",
+      quote: "\"C'est parce que c'est pas du loli rape\" -kiniamaro 2014",
     }, {
-      key: 'mac',
-      quote: '"ouais, I\'m not letting it die, c\'est mon dernier mac à vie" -alxgnon 2014'
+      key: "mac",
+      quote: "\"ouais, I'm not letting it die, c'est mon dernier mac à vie\" -alxgnon 2014"
     }, {
-      key: 'arch',
-      quote: '"Check ben comment j\'installe Arch en 30 minutes!" -MrJudgemental 2014'
+      key: "arch",
+      quote: "\"Check ben comment j'installe Arch en 30 minutes!\" -MrJudgemental 2014"
     }, {
-      key: 'biblio',
-      quote: '"En arrière de la biblio municipale" -SBSTP 2014',
+      key: "biblio",
+      quote: "\"En arrière de la biblio municipale\" -SBSTP 2014",
     }, {
-      key: 'broken',
-      quote: 'The bot is broken! -everyone 2014',
+      key: "broken",
+      quote: "\"The bot is broken!\" -everyone 2014",
     }, {
-      key: 'rodric',
-      quote: 'http://i.imgur.com/0CW6W7t.jpg'
+      key: "rodric",
+      quote: "http://i.imgur.com/0CW6W7t.jpg"
     }, {
-      key: 'lookingformaniac',
-      quote: 'http://pastebin.com/BrtTPvXT'
+      key: "lookingformaniac",
+      quote: "http://pastebin.com/BrtTPvXT"
     }, {
-      key: 'nonsense',
-      quote: '"tu me faire un debian pi un avec un pingouin du si vx" - SBSTP 2014'
+      key: "nonsense",
+      quote: "\"tu me faire un debian pi un avec un pingouin du si vx\" - SBSTP 2014"
     }, {
-      key: 'irc',
-      quote: '"ça me tente pas d\'attendre sur l\'irc" - DrFoliberg 2014'
+      key: "irc",
+      quote: "\"ça me tente pas d'attendre sur l'irc\" - DrFoliberg 2014"
     }, {
-      key: 'grab',
-      quote: '"moi j\'aime bien grab des petites filles defois" - alxgnon 2014'
+      key: "grab",
+      quote: "\"moi j'aime bien grab des petites filles defois\" - alxgnon 2014"
     }, {
-      key: 'java',
-      quote: '"laissez moi faire du java criss" - DrFoliberg 2014'
+      key: "java",
+      quote: "\"laissez moi faire du java criss\" - DrFoliberg 2014"
     }, {
-      key: 'drugs',
-      quote: '"Alright I taking drugs" - Maro-kun 2015'
+      key: "drugs",
+      quote: "\"Alright I taking drugs\" - Maro-kun 2015"
     }, {
-      key: '16',
-      quote: '"non fadrait que seize ans messemble c\'est faisable" - Maro-kun 2015',
+      key: "16",
+      quote: "\"non fadrait que seize ans messemble c'est faisable\" - Maro-kun 2015",
     }, {
-      key: 'cul',
-      quote: '"Entk, moi j\'aime juste les culs de gars." - petitprince 2015',
+      key: "cul",
+      quote: "\"Entk, moi j'aime juste les culs de gars.\" - petitprince 2015",
     }, {
-      key: 'lesbien',
-      quote: '"I NEVER NEVER WAS A lesbien" - Maro-Kun 2015',
+      key: "lesbien",
+      quote: "\"I NEVER NEVER WAS A lesbien\" - Maro-Kun 2015",
     }, {
-      key: '<3 java',
-      quote: '"<3 java" - maxdup 2015',
+      key: "<3 java",
+      quote: "\"<3 java\" - maxdup 2015",
     }, {
-      key: 'privé',
-      quote: '"comment tu as eu ca?? c\'est tres privé !!!!" - danou_ 2015',
+      key: "privé",
+      quote: "\"comment tu as eu ca?? c'est tres privé !!!!\" - danou_ 2015",
     }, {
-      key: 'snake',
-      quote: '"Dude, I\'d fuck that snake raw" - FifteenIsForShow 2015',
+      key: "snake",
+      quote: "\"Dude, I'd fuck that snake raw\" - FifteenIsForShow 2015",
     },
   ],
 };
