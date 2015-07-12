@@ -15,6 +15,7 @@
         "lodash": "2.4.x",
         "mathjs": "0.22.x",
         "moment": "2.6.x",
+        "mysql": "2.7.x",
         "node-watch": "0.3.x",
         "request": "2.34.x",
         "tough-cookie": "^1.1.0",
