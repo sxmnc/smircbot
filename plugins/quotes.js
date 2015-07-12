@@ -1,13 +1,13 @@
-var _ = require('lodash');
+var _ = require("lodash");
 
 module.exports = function (core) {
   var plugin = {};
 
-  var trigger = '$quotes';
+  var trigger = "$quotes";
 
   plugin.help = {
-    quotes: '$quotes\n' +
-        'Display a random famous quote from the #SexManiac users',
+    quotes: "$quotes\n" +
+        "Display a random famous quote from the #SexManiac users",
   };
 
   function pubListener(nick, text) {
@@ -23,7 +23,7 @@ module.exports = function (core) {
         });
 
         if (quoteItem === undefined) {
-          core.irc.sayFmt('No quote tagged "%s"', arg);
+          core.irc.sayFmt("No quote tagged "%s"", arg);
         } else {
           sayQuote(quoteItem);
         }
@@ -32,20 +32,20 @@ module.exports = function (core) {
   }
 
   function sayQuote(quoteObject) {
-    if (quoteObject.hasOwnProperty('quote')) {
+    if (quoteObject.hasOwnProperty("quote")) {
       core.irc.sayPub(quoteObject.quote);
     } else {
-      core.irc.sayFmt('An entry tagged "%s" exists, but does not have' +
-          ' any text associated with it.', quoteObject.tag);
+      core.irc.sayFmt("An entry tagged "%s" exists, but does not have" +
+          " any text associated with it.", quoteObject.tag);
     }
   }
 
   plugin.load = function () {
-    core.irc.on('pub', pubListener);
+    core.irc.on("pub", pubListener);
   };
 
   plugin.unload = function () {
-    core.irc.removeListener('pub', pubListener);
+    core.irc.removeListener("pub", pubListener);
   };
   return plugin;
 };

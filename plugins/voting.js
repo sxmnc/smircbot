@@ -1,18 +1,18 @@
-var _ = require('lodash');
+var _ = require("lodash");
 
 module.exports = function (core) {
   var plugin = {};
   var callers = {
-    callvote: '$vote call',
-    endvote: '$vote end',
-    unvote: '$vote cancel',
-    swap: '$vote swap',
-    stats: '$vote stats',
-    list: '$vote list',
-    generic: '$vote',
+    callvote: "$vote call",
+    endvote: "$vote end",
+    unvote: "$vote cancel",
+    swap: "$vote swap",
+    stats: "$vote stats",
+    list: "$vote list",
+    generic: "$vote",
   };
 
-  var tagPrefix = '#';
+  var tagPrefix = "#";
   var maxPools = 1;
 
   var openPools = [];
@@ -34,15 +34,15 @@ module.exports = function (core) {
       voteEnd(args, nick);
     } else if (core.util.beginsIgnoreCase(text, callers.unvote)) {
       // args = text.substring(callers.unvote.length);
-      core.irc.sayFmt('%s is unimplemented.', callers.unvote);
+      core.irc.sayFmt("%s is unimplemented.", callers.unvote);
 
     } else if (core.util.beginsIgnoreCase(text, callers.stats)) {
       // args = text.substring(callers.stats.length);
-      core.irc.sayFmt('%s is unimplemented.', callers.stats);
+      core.irc.sayFmt("%s is unimplemented.", callers.stats);
 
     } else if (core.util.beginsIgnoreCase(text, callers.list)) {
       // No args on this one
-      core.irc.sayFmt('%s is unimplemented.', callers.list);
+      core.irc.sayFmt("%s is unimplemented.", callers.list);
     }
   }
 
@@ -56,19 +56,19 @@ module.exports = function (core) {
             core.irc.sayFmt("%s : You've already voted for this", nick);
           } else {
             pool.votes[nick] = pool.options[optionIndex];
-            core.irc.sayFmt('%s changed his vote.', nick);
+            core.irc.sayFmt("%s changed his vote.", nick);
           }
         } else {
           pool.votes[nick] = pool.options[optionIndex];
-          core.irc.sayFmt('%s voted!', nick);
+          core.irc.sayFmt("%s voted!", nick);
         }
       }
     };
   }
 
   function genericVoteCallback(pool) {
-    console.log('votes : ' + JSON.stringify(pool.votes));
-    console.log('Options : ' + pool.options);
+    console.log("votes : " + JSON.stringify(pool.votes));
+    console.log("Options : " + pool.options);
 
     // Counting votes
     var scoreboard = evaluateScore(pool);
@@ -78,28 +78,27 @@ module.exports = function (core) {
         function (v) { return v[0]; }),
         function (v) { return v[1]; });
 
-    console.log('Scoreboard : ' + scoreboard);
-    console.log('Winners : ' + winners);
+    console.log("Scoreboard : " + scoreboard);
+    console.log("Winners : " + winners);
 
     // Announcing winners
     if (Object.keys(pool.votes).length === 0) {
-      core.irc.sayPub('Nobody voted, the vote is cancelled.');
+      core.irc.sayPub("Nobody voted, the vote is cancelled.");
     } else if (winners.length !== 1) {
-      core.irc.sayPub('The votes are in!');
+      core.irc.sayPub("The votes are in!");
       if (winners.length === 2) {
-        core.irc.sayFmt('On the question of "%s", "%s" and "%s" are both tied' +
-            ' for victory, with %s votes' +
-            ' each', pool.question, winners[0],
-            winners[1], maxScore);
+        core.irc.sayFmt('On the question of "%s", "%s" and "%s" are ' +
+            "both tied for victory, with %s votes each",
+            pool.question, winners[0], winners[1], maxScore);
       } else {
-        core.irc.sayFmt('On the question of "%s", all the following options' +
-            ' are tied for victory : "%s"', pool.question,
-            winners.join('", "'));
+        core.irc.sayFmt('On the question of "%s", all the following ' +
+            'options are tied for victory : "%s"',
+            pool.question, winners.join('", "'));
       }
     } else {
-      core.irc.sayPub('The votes are in!');
-      core.irc.sayFmt('On the question of "%s" the winner is "%s" with a' +
-          ' total of %s votes.', pool.question,
+      core.irc.sayPub("The votes are in!");
+      core.irc.sayFmt('On the question of "%s" the winner is "%s" with a ' +
+          " total of %s votes.", pool.question,
           winners[0], maxScore);
     }
   }
@@ -111,26 +110,26 @@ module.exports = function (core) {
     if (args[0].indexOf(tagPrefix) === 0) {
       // Even if it is, we don't care.
       // TODO The pool is a singleton. For now at least
-      tag = '';
+      tag = "";
       args.shift();
     } else {
-      tag = '';
+      tag = "";
     }
 
     if (openPools.length >= maxPools) {
-      core.irc.sayFmt('No more pools can be opened,' +
+      core.irc.sayFmt("No more pools can be opened," +
           " we've already reached the limit of %s.", maxPools);
     } else {
 
       if (poolWithTagExists(tag)) {
-        if (tag === '') {
-          core.irc.sayFmt('There is already a pool in the default slot,' +
-              ' please specify a voting tag' +
+        if (tag === "") {
+          core.irc.sayFmt("There is already a pool in the default slot," +
+              " please specify a voting tag" +
               ' (i.e : %s #myquestion "Question" answers) or' +
-              ' close the existing pool.', callers.callvote);
+              " close the existing pool.", callers.callvote);
         } else {
-          core.irc.sarFmt('There is already a pool using the tag %s,' +
-              'please use another.');
+          core.irc.sarFmt("There is already a pool using the tag %s," +
+              "please use another.");
         }
       } else {
         question = args[0];
@@ -142,11 +141,11 @@ module.exports = function (core) {
 
         core.irc.sayFmt('%s called for a vote : "%s"',
             askerNick, pool.question);
-        core.irc.sayFmt('The options are %s', pool.options.join(', '));
-        core.irc.sayPub('Let the votes begin!');
+        core.irc.sayFmt("The options are %s", pool.options.join(", "));
+        core.irc.sayPub("Let the votes begin!");
 
         openPools.push(pool);
-        core.irc.on('pub', pool.listener);
+        core.irc.on("pub", pool.listener);
       }
     }
   }
@@ -154,7 +153,7 @@ module.exports = function (core) {
   function voteEnd(args, nick) {
     // TODO : Make it close the pool received in argument only.
     openPools.forEach(function (pool) {
-      core.irc.removeListener('pub', pool.listener);
+      core.irc.removeListener("pub", pool.listener);
       pool.callback(pool);
       openPools.splice(openPools.indexOf(pool), 1);
     });
@@ -192,13 +191,13 @@ module.exports = function (core) {
         if (optionIndex !== -1) {
           scoreboard[optionIndex]++;
         } else {
-          console.log('WARNING: Invalid vote (' + voter + ', ' +
-                voteSelection + '), ignored');
+          console.log("WARNING: Invalid vote (" + voter + ", " +
+                voteSelection + "), ignored");
         }
       }
     }
 
-    if (typeof optionKey === 'undefined') {
+    if (typeof optionKey === "undefined") {
       return scoreboard;
     } else {
       optionIndex = pool.options.indexOf(optionKey);
@@ -211,14 +210,14 @@ module.exports = function (core) {
   }
 
   plugin.load = function () {
-    core.irc.on('pub', pubListener);
+    core.irc.on("pub", pubListener);
   };
 
   plugin.unload = function () {
     openPools.forEach(function (pool) {
-      core.irc.removeListener('pub', pool.listener);
+      core.irc.removeListener("pub", pool.listener);
     });
-    core.irc.removeListener('pub', pubListener);
+    core.irc.removeListener("pub", pubListener);
   };
 
   return plugin;
