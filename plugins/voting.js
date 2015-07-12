@@ -130,8 +130,9 @@ module.exports = function (core) {
                             '(i.e : %s #myquestion "Question" answers) or ' +
                             "close the existing pool.", callers.callvote);
                 } else {
-                    core.irc.sarFmt("There is already a pool using " +
-                                    "the tag %s, please use another.");
+                    core.irc.sayFmt("There is already a pool using " +
+                                    "the tag %s, please use another.",
+                                    tag);
                 }
             } else {
                 question = args[0];
