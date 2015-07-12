@@ -30,7 +30,7 @@ module.exports = function (core) {
                                     "method. wut?", algorithm);
                 }
             } else {
-                core.irc.sayFmt("Unknown algorithm "%s".", algorithm);
+                core.irc.sayFmt("Unknown algorithm `%s`.", algorithm);
             }
         }
     }
