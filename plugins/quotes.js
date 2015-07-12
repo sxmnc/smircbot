@@ -24,7 +24,7 @@ module.exports = function (core) {
                 });
 
                 if (quoteItem === undefined) {
-                    core.irc.sayFmt("No quote tagged "%s"", arg);
+                    core.irc.sayFmt('No quote tagged "%s"', arg);
                 } else {
                     sayQuote(quoteItem);
                 }
@@ -36,7 +36,7 @@ module.exports = function (core) {
         if (quoteObject.hasOwnProperty("quote")) {
             core.irc.sayPub(quoteObject.quote);
         } else {
-            core.irc.sayFmt("An entry tagged "%s" exists, " +
+            core.irc.sayFmt('An entry tagged "%s" exists, ' +
                             "but does not have any text associated with it.",
                             quoteObject.tag);
         }
