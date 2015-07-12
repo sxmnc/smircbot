@@ -110,7 +110,7 @@ module.exports = {
             quote: "\"Dude, I'd fuck that snake raw\" - FifteenIsForShow 2015",
         }, {
             key: "dog",
-            quote "\"Why am I a dog\" - alxgnon 2015",
+            quote: "\"Why am I a dog\" - alxgnon 2015",
         },
     ],
 };
