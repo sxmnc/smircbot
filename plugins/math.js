@@ -1,5 +1,4 @@
-var mathjs = require("mathjs");
-var math = mathjs();
+var math = require("mathjs");
 
 module.exports = function (core) {
     var plugin = {};
