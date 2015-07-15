@@ -111,6 +111,9 @@ module.exports = {
         }, {
             key: "dog",
             quote: "\"Why am I a dog\" - alxgnon 2015",
+        }, {
+            key: "penis",
+            quote: "\"Moi j\'ai un vrai penis !!! :(\" - Ameenekosan 2015",
         },
     ],
 };
