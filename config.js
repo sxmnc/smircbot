@@ -117,6 +117,9 @@ module.exports = {
         }, {
             key: "now you do",
             quote: "\"hey guys, do i have a quote yet?\" - Potato-Sama 2015",
+        }, {
+            key: "dragon dildo",
+            quote: "\"Hah, I wish I had one!\" - FifteenIsForShow 2015",
         },
     ],
 };
