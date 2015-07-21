@@ -120,6 +120,9 @@ module.exports = {
         }, {
             key: "dragon dildo",
             quote: "\"Hah, I wish I had one!\" - FifteenIsForShow 2015",
-        },
+        }, {
+            key: "penis <3",
+            quote: "\"tout le monde aime mon gros penis <3\" - Ameenekosan 2015",
+        }
     ],
 };
