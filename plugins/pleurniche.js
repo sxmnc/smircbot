@@ -9,7 +9,7 @@ module.exports = function (core) {
                      "=(=(=(=(=(=(=(=(=(=(=(=(=(=(=(=(=(=(=(=(=(";
 
         if (core.util.beginsIgnoreCase(text, trigger)) {
-            var text = text.substring(trigger.length);
+            var text = text.substring(trigger.length).trim();
             core.irc.sayFmt(pleure, text);
         }
     }
