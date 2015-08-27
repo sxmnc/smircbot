@@ -123,6 +123,9 @@ module.exports = {
         }, {
             key: "penis <3",
             quote: "\"tout le monde aime mon gros penis <3\" - Ameenekosan 2015",
-        }
+        }, {
+            key: "anally raped",
+            quote: "\"if I'm to be anally raped, I'd rather it be dry and get the full experience\" - alxgnon 2015",
+        },
     ],
 };
