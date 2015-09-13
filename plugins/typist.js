@@ -5,10 +5,10 @@ module.exports = function (core) {
 
     plugin.help = {
         typist: "$typist\n" +
-                "Starts a typist game with "$typist start"\n" +
+                "Starts a typist game with `$typist start`\n" +
                 "type the sentence without errors before everyone " +
                 "else to win points\n" +
-                "type "$typist reset" to end the current game",
+                "type `$typist reset` to end the current game",
     };
 
     var startingLives = 2;
