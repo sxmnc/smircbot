@@ -126,6 +126,9 @@ module.exports = {
         }, {
             key: "anally raped",
             quote: "\"if I'm to be anally raped, I'd rather it be dry and get the full experience\" - alxgnon 2015",
+        }, {
+            key: "first mac",
+            quote: '"je regrette de pas avoir un mac" - FifteenIsForShow 2015',
         },
     ],
 };
