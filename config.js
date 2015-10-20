@@ -129,6 +129,9 @@ module.exports = {
         }, {
             key: "first mac",
             quote: '"je regrette de pas avoir un mac" - FifteenIsForShow 2015',
+        }, {
+            key: "boxer",
+            quote: '"la shape de la dick dans le boxer, ça c\'est hot" - Kiniamaro 2015',
         },
     ],
 };
