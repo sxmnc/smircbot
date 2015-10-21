@@ -15,7 +15,11 @@ module.exports = function (core) {
 
     function pubListener(nick, text) {
         if (_.contains(text, triggers.lilheart)) {
-            core.irc.sayPub("#nohomo");
+            if (core.util.eqIgnoreCase(nick, "Ameenekosan")) {
+                core.irc.sayPub("#kawaii");
+            } else {
+                core.irc.sayPub("#nohomo");
+            }
         } else if (text == triggers.nose) {
             core.irc.sayPub("THE TROLL STRUCK AGAIN");
             if (_.random(1) === 0) {
