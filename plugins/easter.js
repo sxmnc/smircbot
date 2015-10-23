@@ -16,7 +16,7 @@ module.exports = function (core) {
     function pubListener(nick, text) {
         if (_.contains(text, triggers.lilheart)) {
             if (core.util.eqIgnoreCase(nick, "Ameenekosan")) {
-                core.irc.sayPub("#kawaii");
+                core.irc.sayPub("#sohomo");
             } else {
                 core.irc.sayPub("#nohomo");
             }
