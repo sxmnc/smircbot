@@ -51,6 +51,7 @@ module.exports = {
         "open the pod bay doors please, HAL",
         "my precious",
         "I'm the king of the world!",
+        "alxgnon is a sex god"
     ],
 
     quotes: [
@@ -132,6 +133,8 @@ module.exports = {
         }, {
             key: "boxer",
             quote: '"la shape de la dick dans le boxer, ça c\'est hot" - Kiniamaro 2015',
-        },
+        }, {
+            key: "chimique",
+            quote: '"Mon pénis est chimique" - alxgnon 2015',
     ],
 };
