@@ -136,5 +136,6 @@ module.exports = {
         }, {
             key: "chimique",
             quote: '"Mon pénis est chimique" - alxgnon 2015',
+        }
     ],
 };
