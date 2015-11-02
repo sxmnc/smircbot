@@ -13,6 +13,7 @@ module.exports = function (core) {
     function pubListener(nick, text) {
         var commaTrigger = core.nickname + ",";
         var colonTrigger = core.nickname + ":";
+        var loneTrigger = core.nickname;
 
         var trimmed = text.trim();
 
@@ -20,6 +21,8 @@ module.exports = function (core) {
             reply(fmt("%s,", nick));
         } else if (core.util.eqIgnoreCase(trimmed, colonTrigger)) {
             reply(fmt("%s:", nick));
+        } else if (core.util.eqIgnoreCase(trimmed, loneTrigger)) {
+            reply(nick);
         }
     }
 
