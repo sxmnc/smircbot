@@ -4,7 +4,7 @@ var request = require("request");
 module.exports = function (core) {
     var plugin = {};
 
-    function whatCD(r) {
+    function whatCD(r, url) {
         r.post({
             url: "https://what.cd/login.php",
             followAllRedirects: true,
@@ -15,11 +15,15 @@ module.exports = function (core) {
             }
         }, function (err, res, body) {
             if (!err && res.statusCode === 200) {
-                var result = /<title>\s*(.+)\s*<\/title>/.exec(body);
-                if (result && result.length === 2 && result[1]) {
-                    core.irc.sayFmt("link: %s",
-                                    entities.decodeHTML(result[1]));
-                }
+                r.get(url, function (err, res, body) {
+                    if (!err && res.statusCode === 200) {
+                        var result = /<title>\s*(.+)\s*<\/title>/.exec(body);
+                        if (result && result.length === 2 && result[1]) {
+                            core.irc.sayFmt("link: %s",
+                                            entities.decodeHTML(result[1]));
+                        }
+                    }
+                });
             }
         });
     }
@@ -34,7 +38,7 @@ module.exports = function (core) {
                     var result = /<title>\s*(.+)\s*<\/title>/.exec(body);
                     if (result && result.length === 2 && result[1]) {
                         if (result[1] === "Login :: What.CD") {
-                            whatCD(r);
+                            whatCD(r, url);
                         } else {
                             core.irc.sayFmt("link: %s",
                                             entities.decodeHTML(result[1]));
