@@ -19,7 +19,7 @@ module.exports = function (core) {
                 qs: {
                     q: city,
                     units: "metric",
-                    id: core.config.weatherApiKey,
+                    APPID: core.config.weatherApiKey,
                 },
                 json: true,
             }, function (err, response, body) {
