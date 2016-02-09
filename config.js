@@ -136,6 +136,9 @@ module.exports = {
         }, {
             key: "chimique",
             quote: '"Mon pénis est chimique" - alxgnon 2015',
+        }, {
+            key: "15's life",
+            quote: "\"Now's the time to question what I'm doing with my life\" - FifteenIsTooShor 2016",
         }
     ],
 };
