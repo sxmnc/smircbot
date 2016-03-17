@@ -139,6 +139,9 @@ module.exports = {
         }, {
             key: "15's life",
             quote: "\"Now's the time to question what I'm doing with my life\" - FifteenIsTooShor 2016",
+        }, {
+            key: "spanking",
+            quote: "\"spanking is not abusive\" - alxgnon 2016",
         }
     ],
 };
