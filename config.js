@@ -142,6 +142,9 @@ module.exports = {
         }, {
             key: "spanking",
             quote: "\"spanking is not abusive\" - alxgnon 2016",
-        }
+        }, {
+            key: "heaven",
+            quote: "\"in fact my picture of heaven is just me inserting into a warm wet hole over and over again forever\" - alxgnon 2016",
+        },
     ],
 };
