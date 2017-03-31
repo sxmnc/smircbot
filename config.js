@@ -113,17 +113,11 @@ module.exports = {
             key: "dog",
             quote: "\"Why am I a dog\" - alxgnon 2015",
         }, {
-            key: "penis",
-            quote: "\"Moi j\'ai un vrai penis !!! :(\" - Ameenekosan 2015",
-        }, {
             key: "now you do",
             quote: "\"hey guys, do i have a quote yet?\" - Potato-Sama 2015",
         }, {
             key: "dragon dildo",
             quote: "\"Hah, I wish I had one!\" - FifteenIsForShow 2015",
-        }, {
-            key: "penis <3",
-            quote: "\"tout le monde aime mon gros penis <3\" - Ameenekosan 2015",
         }, {
             key: "anally raped",
             quote: "\"if I'm to be anally raped, I'd rather it be dry and get the full experience\" - alxgnon 2015",
