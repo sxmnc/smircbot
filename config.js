@@ -146,5 +146,9 @@ module.exports = {
             key: "heaven",
             quote: "\"in fact my picture of heaven is just me inserting into a warm wet hole over and over again forever\" - alxgnon 2016",
         },
+        {
+            key: "Freshman Fifteen",
+            quote: "\"????\" - Fifteen, 2017"
+        }
     ],
 };
