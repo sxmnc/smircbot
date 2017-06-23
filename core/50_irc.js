@@ -18,6 +18,7 @@ module.exports = function (core) {
             port: core.port,
             realName: core.realname,
             channels: [core.channel],
+            debug: true,
         }
     );
     core.irc.setMaxListeners(100);

@@ -1,6 +1,6 @@
 module.exports = {
     core: {
-        server: "irc.freenode.net",
+        server: "127.0.0.1",
         port: 6667,
         channel: "#SexManiac",
 
