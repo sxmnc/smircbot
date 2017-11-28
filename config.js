@@ -139,9 +139,12 @@ module.exports = {
         }, {
             key: "heaven",
             quote: "\"in fact my picture of heaven is just me inserting into a warm wet hole over and over again forever\" - alxgnon 2016",
-        },{
+        }, {
             key: "weeds",
             quote: "\"I want to sex now with some weeds oh fuck\" - abd31999 2017",
+        }, {
+            key: "finish off",
+            quote: "\"alxgnon, see if you can get yourself to finish Off!\" - Fifteen 2017",
         }
     ],
 };
