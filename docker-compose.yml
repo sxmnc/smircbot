@@ -1,0 +1,9 @@
+version: "3"
+services:
+  smircbot:
+    build: .
+    volumes:
+      - ./core/01_private.js:/app/core/01_private.js
+    restart: unless-stopped
+    ports:
+      - 6667:6667
