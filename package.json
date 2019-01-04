@@ -10,16 +10,16 @@
     },
     "dependencies": {
         "entities": "1.1.x",
-        "glob": "3.2.x",
+        "glob": "7.x",
         "irc": "0.3.x",
-        "lodash": "2.4.x",
-        "mathjs": "1.7.x",
-        "moment": "2.6.x",
-        "mysql": "2.7.x",
+        "lodash": "3.x",
+        "mathjs": "5.x",
+        "moment": "^2.23.0",
         "node-watch": "0.3.x",
-        "request": "2.34.x",
-        "tough-cookie": "^1.1.0",
-        "xml2js": "0.4.x",
-        "xregexp": "2.0.x"
+        "request": "^2.88.0",
+        "xml2js": "0.4.x"
+    },
+    "optionalDependencies": {
+        "mysql": "^2.16.0"
     }
 }
