@@ -1,9 +1,24 @@
 version: "3"
 services:
+  znc-bouncer:
+    image: znc
+    volumes:
+      - /mnt/docker-data/znc:/znc-data
+    networks:
+      - znc-network
+    ports:
+      - 6697:6697
+    restart: unless-stopped
+
   smircbot:
     build: .
     volumes:
-      - ./core/01_private.js:/app/core/01_private.js
+      - /mnt/docker-data/smircbot/01_private.js:/app/core/01_private.js
+    networks:
+      - znc-network
     restart: unless-stopped
-    ports:
-      - 6667:6667
+
+# docker network create znc-network
+networks:
+  znc-network:
+    external: true

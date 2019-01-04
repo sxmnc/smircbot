@@ -1,6 +1,6 @@
 module.exports = {
     core: {
-        server: "127.0.0.1",
+        server: "znc-bouncer",
         port: 6667,
         channel: "#SexManiac",
 
