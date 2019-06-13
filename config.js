@@ -145,6 +145,9 @@ module.exports = {
         }, {
             key: "finish off",
             quote: "\"alxgnon, see if you can get yourself to finish Off!\" - Fifteen 2017",
+        }, {
+            key: "testicules",
+            quote: "\"Kiniamaro: Dude calme tes testicules\" - Maro-Kun 2019",
         }
     ],
 };
