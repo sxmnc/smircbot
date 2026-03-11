@@ -6,7 +6,7 @@ module.exports = function (core) {
 
     function reply(msg) {
         setTimeout(function () {
-            core.irc.sayPub(msg);
+            core.chat.sayPub(msg);
         }, _.random(500, 1500));
     }
 
@@ -27,11 +27,11 @@ module.exports = function (core) {
     }
 
     plugin.load = function () {
-        core.irc.on("pub", pubListener);
+        core.chat.on("pub", pubListener);
     };
 
     plugin.unload = function () {
-        core.irc.removeListener("pub", pubListener);
+        core.chat.removeListener("pub", pubListener);
     };
 
     return plugin;

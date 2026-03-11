@@ -8,7 +8,11 @@
         "type": "git",
         "url": "https://github.com/sxmnc/smircbot"
     },
+    "scripts": {
+        "start": "node launch.js"
+    },
     "dependencies": {
+        "discord.js": "^14.25.1",
         "entities": "1.1.x",
         "glob": "7.x",
         "irc": "0.3.x",

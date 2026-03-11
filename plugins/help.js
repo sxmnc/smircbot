@@ -23,19 +23,19 @@ module.exports = function (core) {
                 }
             });
             if (help) {
-                core.irc.say(nick, fmt("help %s: %s", topic, help));
+                core.chat.say(nick, fmt("help %s: %s", topic, help));
             } else {
-                core.irc.say(nick, fmt("help %s: No help found.", topic));
+                core.chat.say(nick, fmt("help %s: No help found.", topic));
             }
         }
     }
 
     plugin.load = function () {
-        core.irc.on("pub", pubListener);
+        core.chat.on("pub", pubListener);
     };
 
     plugin.unload = function () {
-        core.irc.removeListener("pub", pubListener);
+        core.chat.removeListener("pub", pubListener);
     };
 
     return plugin;

@@ -5,7 +5,7 @@ var _ = require("lodash");
 
 module.exports = function (core) {
     // Log received IRC activity.
-    core.irc.on("raw", function (msg) {
+    core.chat.on("raw", function (msg) {
         if (core.debug) {
             var msgTuple = _.clone(msg.args);
             msgTuple.unshift(msg.command);
@@ -36,7 +36,7 @@ module.exports = function (core) {
     });
 
     // Log unhandled IRC errors.
-    core.irc.on("error", function (err) {
+    core.chat.on("error", function (err) {
         console.log(err.stack);
     });
 

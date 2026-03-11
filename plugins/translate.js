@@ -23,7 +23,7 @@ module.exports = function (core) {
             }, function (err, response, body) {
                 if (!err) {
                     if (body.code === 200) {
-                        core.irc.sayFmt("Translation result: %s", body.text);
+                        core.chat.sayFmt("Translation result: %s", body.text);
                     }
                 }
             });
@@ -31,11 +31,11 @@ module.exports = function (core) {
     }
 
     plugin.load = function () {
-        core.irc.on("pub", pubListener);
+        core.chat.on("pub", pubListener);
     };
 
     plugin.unload = function () {
-        core.irc.removeListener("pub", pubListener);
+        core.chat.removeListener("pub", pubListener);
     };
 
     return plugin;

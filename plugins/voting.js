@@ -35,15 +35,15 @@ module.exports = function (core) {
             voteEnd(args, nick);
         } else if (core.util.beginsIgnoreCase(text, callers.unvote)) {
             // args = text.substring(callers.unvote.length);
-            core.irc.sayFmt("%s is unimplemented.", callers.unvote);
+            core.chat.sayFmt("%s is unimplemented.", callers.unvote);
 
         } else if (core.util.beginsIgnoreCase(text, callers.stats)) {
             // args = text.substring(callers.stats.length);
-            core.irc.sayFmt("%s is unimplemented.", callers.stats);
+            core.chat.sayFmt("%s is unimplemented.", callers.stats);
 
         } else if (core.util.beginsIgnoreCase(text, callers.list)) {
             // No args on this one
-            core.irc.sayFmt("%s is unimplemented.", callers.list);
+            core.chat.sayFmt("%s is unimplemented.", callers.list);
         }
     }
 
@@ -54,15 +54,15 @@ module.exports = function (core) {
                 if (pool.votes.hasOwnProperty(nick)) {
                     if (core.util.eqIgnoreCase(pool.votes[nick],
                             pool.options[optionIndex])) {
-                        core.irc.sayFmt("%s : You've already voted for this",
+                        core.chat.sayFmt("%s : You've already voted for this",
                                         nick);
                     } else {
                         pool.votes[nick] = pool.options[optionIndex];
-                        core.irc.sayFmt("%s changed his vote.", nick);
+                        core.chat.sayFmt("%s changed his vote.", nick);
                     }
                 } else {
                     pool.votes[nick] = pool.options[optionIndex];
-                    core.irc.sayFmt("%s voted!", nick);
+                    core.chat.sayFmt("%s voted!", nick);
                 }
             }
         };
@@ -85,21 +85,21 @@ module.exports = function (core) {
 
         // Announcing winners
         if (Object.keys(pool.votes).length === 0) {
-            core.irc.sayPub("Nobody voted, the vote is cancelled.");
+            core.chat.sayPub("Nobody voted, the vote is cancelled.");
         } else if (winners.length !== 1) {
-            core.irc.sayPub("The votes are in!");
+            core.chat.sayPub("The votes are in!");
             if (winners.length === 2) {
-                core.irc.sayFmt('On the question of "%s", "%s" and "%s" are ' +
+                core.chat.sayFmt('On the question of "%s", "%s" and "%s" are ' +
                         "both tied for victory, with %s votes each",
                         pool.question, winners[0], winners[1], maxScore);
             } else {
-                core.irc.sayFmt('On the question of "%s", all the following ' +
+                core.chat.sayFmt('On the question of "%s", all the following ' +
                         'options are tied for victory : "%s"',
                         pool.question, winners.join('", "'));
             }
         } else {
-            core.irc.sayPub("The votes are in!");
-            core.irc.sayFmt('On the question of "%s" the winner is "%s" ' +
+            core.chat.sayPub("The votes are in!");
+            core.chat.sayFmt('On the question of "%s" the winner is "%s" ' +
                     "with a total of %s votes.", pool.question,
                     winners[0], maxScore);
         }
@@ -119,18 +119,18 @@ module.exports = function (core) {
         }
 
         if (openPools.length >= maxPools) {
-            core.irc.sayFmt("No more pools can be opened," +
+            core.chat.sayFmt("No more pools can be opened," +
                     " we've already reached the limit of %s.", maxPools);
         } else {
 
             if (poolWithTagExists(tag)) {
                 if (tag === "") {
-                    core.irc.sayFmt("There is already a pool in the " +
+                    core.chat.sayFmt("There is already a pool in the " +
                             "default slot, please specify a voting tag " +
                             '(i.e : %s #myquestion "Question" answers) or ' +
                             "close the existing pool.", callers.callvote);
                 } else {
-                    core.irc.sayFmt("There is already a pool using " +
+                    core.chat.sayFmt("There is already a pool using " +
                                     "the tag %s, please use another.",
                                     tag);
                 }
@@ -142,13 +142,13 @@ module.exports = function (core) {
                 var pool = newPool(tag, question, options, askerNick,
                         genericVoteCallback);
 
-                core.irc.sayFmt('%s called for a vote : "%s"',
+                core.chat.sayFmt('%s called for a vote : "%s"',
                         askerNick, pool.question);
-                core.irc.sayFmt("The options are %s", pool.options.join(", "));
-                core.irc.sayPub("Let the votes begin!");
+                core.chat.sayFmt("The options are %s", pool.options.join(", "));
+                core.chat.sayPub("Let the votes begin!");
 
                 openPools.push(pool);
-                core.irc.on("pub", pool.listener);
+                core.chat.on("pub", pool.listener);
             }
         }
     }
@@ -156,7 +156,7 @@ module.exports = function (core) {
     function voteEnd(args, nick) {
         // TODO : Make it close the pool received in argument only.
         openPools.forEach(function (pool) {
-            core.irc.removeListener("pub", pool.listener);
+            core.chat.removeListener("pub", pool.listener);
             pool.callback(pool);
             openPools.splice(openPools.indexOf(pool), 1);
         });
@@ -213,14 +213,14 @@ module.exports = function (core) {
     }
 
     plugin.load = function () {
-        core.irc.on("pub", pubListener);
+        core.chat.on("pub", pubListener);
     };
 
     plugin.unload = function () {
         openPools.forEach(function (pool) {
-            core.irc.removeListener("pub", pool.listener);
+            core.chat.removeListener("pub", pool.listener);
         });
-        core.irc.removeListener("pub", pubListener);
+        core.chat.removeListener("pub", pubListener);
     };
 
     return plugin;

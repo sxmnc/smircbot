@@ -50,9 +50,9 @@ module.exports = function (core) {
         if (playing && !playPhase) {
             timer++;
             if (timer === 15) {
-                core.irc.sayPub("15 seconds until the game starts");
+                core.chat.sayPub("15 seconds until the game starts");
             } else if (timer === 30) {
-                core.irc.sayPub("game is starting! " +
+                core.chat.sayPub("game is starting! " +
                                 "joining closed, get ready to play!");
                 joinPhase = false;
                 setLives();
@@ -61,15 +61,15 @@ module.exports = function (core) {
             }
         } else if (playPhase && !writePhase) {
             if (timer === 0) {
-                core.irc.sayPub("Phrase in...");
+                core.chat.sayPub("Phrase in...");
                 phrase = setPhrase();
                 timer++;
             } else if (timer <= 3) {
-                core.irc.sayPub(4 - timer);
+                core.chat.sayPub(4 - timer);
                 timer++;
             } else {
                 writePhase = true;
-                core.irc.sayPub(phrase);
+                core.chat.sayPub(phrase);
             }
         }
     }, 1000);
@@ -84,72 +84,72 @@ module.exports = function (core) {
                     playing = true;
                     joinPhase = true;
                     players.push(nick);
-                    core.irc.sayPub("A game of typist has been started! " +
+                    core.chat.sayPub("A game of typist has been started! " +
                                     "Type `$typist join` to join the game!");
                 } else {
-                    core.irc.sayPub(nick + ": " +
+                    core.chat.sayPub(nick + ": " +
                                     "A game is already in progress, " +
                                     "type `$typist join`, to join the game!");
                 }
             } else if (core.util.eqIgnoreCase(arg, "join")) {
                 if (!playing) {
-                    core.irc.sayFmt("%s: no game in progress, " +
+                    core.chat.sayFmt("%s: no game in progress, " +
                                     "type `$typist start`, to start a game",
                                     nick);
                 } else if (!joinPhase) {
-                    core.irc.sayFmt("%s: it's too late to join!", nick);
+                    core.chat.sayFmt("%s: it's too late to join!", nick);
                 } else {
                     if (_.contains(players, nick)) {
-                        core.irc.sayFmt("%s: you are already playing!", nick);
+                        core.chat.sayFmt("%s: you are already playing!", nick);
                     } else {
                         players.push(nick);
-                        core.irc.sayFmt("%s: has been added to the game!",
+                        core.chat.sayFmt("%s: has been added to the game!",
                                         nick);
                     }
                 }
             } else if (core.util.eqIgnoreCase(arg, "reset")) {
                 reset();
-                core.irc.sayFmt("game has been reset by: %s", nick);
+                core.chat.sayFmt("game has been reset by: %s", nick);
             }
         }
 
         if (writePhase) {
             if (text.indexOf(phrase) === 0 && players.indexOf(nick) !== -1) {
-                core.irc.sayFmt("%s wrote the phrase faster! + 1 life to him!",
+                core.chat.sayFmt("%s wrote the phrase faster! + 1 life to him!",
                                 nick);
                 lives[players.indexOf(nick)] += 1;
-                core.irc.sayFmt("%s is now at %s lives", nick,
+                core.chat.sayFmt("%s is now at %s lives", nick,
                                 lives[players.indexOf(nick)]);
                 if (lives[players.indexOf(nick)] >= win) {
-                    core.irc.sayFmt("%s Wins the game!", nick);
+                    core.chat.sayFmt("%s Wins the game!", nick);
                     reset();
                 }
                 writePhase = false;
                 timer = 0;
             } else if (players.indexOf(nick) !== -1) {
-                core.irc.sayFmt("%s: You are wrong! You lose 1 life!", nick);
+                core.chat.sayFmt("%s: You are wrong! You lose 1 life!", nick);
                 lives[players.indexOf(nick)] -= 1;
                 if (lives[players.indexOf(nick)] <= 0) {
                     players.splice(players.indexOf(nick), 1);
-                    core.irc.sayFmt("%s: You are dead!", nick);
+                    core.chat.sayFmt("%s: You are dead!", nick);
                 } else {
-                    core.irc.sayFmt("%s: You have %s live(s) left!", nick,
+                    core.chat.sayFmt("%s: You have %s live(s) left!", nick,
                                     lives[players.indexOf(nick)]);
                 }
             }
             if (players.length === 0 && playing) {
                 reset();
-                core.irc.sayPub("Everyone is dead! no winner :(");
+                core.chat.sayPub("Everyone is dead! no winner :(");
             }
         }
     }
 
     plugin.load = function () {
-        core.irc.on("pub", pubListener);
+        core.chat.on("pub", pubListener);
     };
 
     plugin.unload = function () {
-        core.irc.removeListener("pub", pubListener);
+        core.chat.removeListener("pub", pubListener);
         clearInterval(typistLoop);
     };
 

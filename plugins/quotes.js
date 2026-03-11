@@ -24,7 +24,7 @@ module.exports = function (core) {
                 });
 
                 if (quoteItem === undefined) {
-                    core.irc.sayFmt('No quote tagged "%s"', arg);
+                    core.chat.sayFmt('No quote tagged "%s"', arg);
                 } else {
                     sayQuote(quoteItem);
                 }
@@ -34,20 +34,20 @@ module.exports = function (core) {
 
     function sayQuote(quoteObject) {
         if (quoteObject.hasOwnProperty("quote")) {
-            core.irc.sayPub(quoteObject.quote);
+            core.chat.sayPub(quoteObject.quote);
         } else {
-            core.irc.sayFmt('An entry tagged "%s" exists, ' +
+            core.chat.sayFmt('An entry tagged "%s" exists, ' +
                             "but does not have any text associated with it.",
                             quoteObject.tag);
         }
     }
 
     plugin.load = function () {
-        core.irc.on("pub", pubListener);
+        core.chat.on("pub", pubListener);
     };
 
     plugin.unload = function () {
-        core.irc.removeListener("pub", pubListener);
+        core.chat.removeListener("pub", pubListener);
     };
 
     return plugin;

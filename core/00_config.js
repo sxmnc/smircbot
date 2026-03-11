@@ -23,6 +23,8 @@ module.exports = function (core, rootPath) {
             core.realname = config.core.realname;
             core.password = config.core.password;
             core.debug = config.core.debug;
+            core.adapter = config.core.adapter || "irc";
+            core.discord = config.core.discord;
         }
         delete config.core;
         core.config = config;

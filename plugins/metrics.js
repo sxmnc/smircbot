@@ -14,7 +14,7 @@ module.exports = function (core) {
     function pubListener(nick, text) {
         if (core.util.eqIgnoreCase(text, trigger)) {
             var uptime = moment.duration(moment().diff(core.startTime));
-            core.irc.sayFmt("%s plugins loaded, %sd %sh %sm %ss uptime",
+            core.chat.sayFmt("%s plugins loaded, %sd %sh %sm %ss uptime",
                             _.size(core.plugins),
                             uptime.days(), uptime.hours(),
                             uptime.minutes(), uptime.seconds());
@@ -22,11 +22,11 @@ module.exports = function (core) {
     }
 
     plugin.load = function () {
-        core.irc.on("pub", pubListener);
+        core.chat.on("pub", pubListener);
     };
 
     plugin.unload = function () {
-        core.irc.removeListener("pub", pubListener);
+        core.chat.removeListener("pub", pubListener);
     };
 
     return plugin;

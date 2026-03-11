@@ -24,23 +24,23 @@ module.exports = function (core) {
                     var inst = crypto.createHash(algorithm);
                     inst.update(input, "utf8");
                     var hash = inst.digest("hex");
-                    core.irc.sayFmt("[%s] -> %s", algorithm, hash);
+                    core.chat.sayFmt("[%s] -> %s", algorithm, hash);
                 } catch (err) {
-                    core.irc.sayFmt("[%s] does not support the digest " +
+                    core.chat.sayFmt("[%s] does not support the digest " +
                                     "method. wut?", algorithm);
                 }
             } else {
-                core.irc.sayFmt("Unknown algorithm `%s`.", algorithm);
+                core.chat.sayFmt("Unknown algorithm `%s`.", algorithm);
             }
         }
     }
 
     plugin.load = function () {
-        core.irc.on("pub", pubListener);
+        core.chat.on("pub", pubListener);
     };
 
     plugin.unload = function () {
-        core.irc.removeListener("pub", pubListener);
+        core.chat.removeListener("pub", pubListener);
     };
 
     return plugin;
