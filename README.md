@@ -73,12 +73,32 @@ module.exports = function (core) {
 
 #### core.startTime :: [`moment Object`](http://momentjs.com/)
 Time when the bot was started up. Used by the metrics plugin to get accurate uptime information.
+#### core.adapter :: `String`
+The currently active chat adapter (`"irc"` or `"discord"`).
 #### core.nickname :: `String`
 The bot's current nickname/username.
 #### core.debug :: `Boolean`
 If true, more debug information will be printed out as the bot runs.
-#### core.adapter :: `String`
-The currently active chat adapter (`"irc"` or `"discord"`).
+
+The following properties are set when using the IRC adapter:
+#### core.server :: `String`
+Address of the IRC server the bot is currently connected to.
+#### core.port :: `Number`
+Port of the IRC server the bot is currently connected to.
+#### core.channel :: `String`
+The bot's current channel, with a leading `#`.
+#### core.realname :: `String`
+This is displayed when someone requests WHOIS information about the bot.
+#### core.password :: `String`
+If undefined, the bot is not identified for its nickname. Otherwise, this is the password it used to identify itself.
+
+The following properties are set when using the IRC adapter (from `40_numeric.js`):
+#### core.rpl :: `Object`
+A list of IRC reply codes, to compare with
+[msg.rawCommand](https://node-irc.readthedocs.org/en/latest/API.html#%27raw%27).
+#### core.err :: `Object`
+A list of IRC error codes, to compare with
+[msg.rawCommand](https://node-irc.readthedocs.org/en/latest/API.html#%27raw%27).
 
 ---
 
