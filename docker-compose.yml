@@ -1,0 +1,6 @@
+services:
+  smircbot:
+    build: .
+    restart: unless-stopped
+    volumes:
+      - ./config.js:/app/config.js:ro
