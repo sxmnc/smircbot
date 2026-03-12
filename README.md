@@ -1,47 +1,110 @@
 # smircbot
 
-The bot currently running on freenode.net#SexManiac.
+A multi-platform chat bot supporting IRC and Discord.
+
+# Setup
+
+Copy `config.example.js` to `config.js` and fill in your settings, then run:
+
+```
+npm start
+```
+
+### Discord
+
+```js
+core: {
+    adapter: "discord",
+    discord: {
+        token: "your-bot-token",
+        guildId: "your-guild-id",
+    },
+    nickname: "smircbot",
+}
+```
+
+To get these values:
+- **token**: Discord Developer Portal → your app → Bot → Reset Token
+- **guildId**: In Discord, enable Developer Mode (Settings → Advanced), then right-click your server → Copy Server ID
+- Invite the bot via OAuth2 → URL Generator (scopes: `bot`, permissions: Send Messages + Read Messages)
+
+### IRC
+
+```js
+core: {
+    adapter: "irc",
+    server: "irc.freenode.net",
+    port: 6667,
+    channel: "#mychannel",
+    nickname: "smircbot",
+    realname: "smircbot",
+}
+```
 
 # Writing Plugins
-Coming soon. For now, the current plugins should give a good idea of how to write them.
+
+Plugins are files in the `plugins/` folder. They are loaded and hot-reloaded automatically.
+
+A plugin exports a function that receives `core` and returns an object with `load` and `unload` methods:
+
+```js
+module.exports = function (core) {
+    var plugin = {};
+
+    function pubListener(nick, text) {
+        if (text === "$hello") {
+            core.chat.sayPub("Hello, " + nick + "!");
+        }
+    }
+
+    plugin.load = function () {
+        core.chat.on("pub", pubListener);
+    };
+
+    plugin.unload = function () {
+        core.chat.removeListener("pub", pubListener);
+    };
+
+    return plugin;
+};
+```
 
 # Core API
 
 #### core.startTime :: [`moment Object`](http://momentjs.com/)
 Time when the bot was started up. Used by the metrics plugin to get accurate uptime information.
+#### core.adapter :: `String`
+The currently active chat adapter (`"irc"` or `"discord"`).
+#### core.nickname :: `String`
+The bot's current nickname/username.
+#### core.debug :: `Boolean`
+If true, more debug information will be printed out as the bot runs.
+
+The following properties are set when using the IRC adapter:
 #### core.server :: `String`
 Address of the IRC server the bot is currently connected to.
 #### core.port :: `Number`
 Port of the IRC server the bot is currently connected to.
 #### core.channel :: `String`
 The bot's current channel, with a leading `#`.
-#### core.nickname :: `String`
-The bot's current nickname.
 #### core.realname :: `String`
 This is displayed when someone requests WHOIS information about the bot.
 #### core.password :: `String`
 If undefined, the bot is not identified for its nickname. Otherwise, this is the password it used to identify itself.
-#### core.operator :: `Boolean`
-If true, this bot has operator privileges on the channel.
-#### core.debug :: `Boolean`
-If true, more debug information will be printed out as the bot runs.
+
+The following properties are set when using the IRC adapter (from `40_numeric.js`):
+#### core.rpl :: `Object`
+A list of IRC reply codes, to compare with
+[msg.rawCommand](https://node-irc.readthedocs.org/en/latest/API.html#%27raw%27).
+#### core.err :: `Object`
+A list of IRC error codes, to compare with
+[msg.rawCommand](https://node-irc.readthedocs.org/en/latest/API.html#%27raw%27).
 
 ---
 
 ### core.config :: `Object`
 Contains the data found in `config.js`. This data is reloaded automatically when the file is changed.
 Its structure is freeform.
-
-
----
-
-#### core.rpl :: `Object`
-A list of IRC reply codes, to compare with
-[msg.rawCommand](https://node-irc.readthedocs.org/en/latest/API.html#%27raw%27).
-
-#### core.err :: `Object`
-A list of IRC error codes, to compare with
-[msg.rawCommand](https://node-irc.readthedocs.org/en/latest/API.html#%27raw%27).
 
 ---
 
@@ -59,22 +122,26 @@ Returns an array containing the resulting elements.
 
 ---
 
-### core.irc :: [`node-irc Client`](https://node-irc.readthedocs.org/en/latest/API.html#client)
-The current IRC connection. `node-irc` already provides a bunch of methods, following are the ones added
-by smircbot's core.
-#### core.irc.maybeOnce(type, listener) :: `Function`
+### core.chat :: `Object`
+The abstract chat interface used by all plugins. Backed by either IRC or Discord depending on config.
+#### core.chat.on("pub", listener) :: `Function`
+Register a listener for public messages. The listener receives `(nick, text, msg)`.
+#### core.chat.removeListener("pub", listener) :: `Function`
+Unregister a previously registered listener.
+#### core.chat.maybeOnce(type, listener) :: `Function`
 Add a temporary listener that will remove itself when `done` is called. `done` is a function
 given as an additional first argument to the listener.
-#### core.irc.sayPub(text) :: `Function`
-Shorthand method for saying messages on the current channel.
-#### core.irc.sayFmt(format, args ...) :: `Function`
-Shorthand method for saying formatted messages on the current channel.
+#### core.chat.sayPub(text) :: `Function`
+Send a message to the current channel.
+#### core.chat.sayFmt(format, args ...) :: `Function`
+Send a formatted message to the current channel.
 The syntax is the same as node's [util.format](http://nodejs.org/api/util.html#util_util_format_format).
-#### core.irc.setNick(nick) :: `Function`
-Set the bot's nickname with this method.
-#### core.irc.useNick(nick, function) :: `Function`
-Change the bot nickname for the specified one for the duration of the function.
-As of now, it is likely to cause issues if used with asynchronous tasks.
+#### core.chat.say(target, text) :: `Function`
+Send a direct message to a user by their username/nick.
+#### core.chat.setNick(nick) :: `Function`
+Set the bot's nickname. No-op on Discord.
+#### core.chat.useNick(nick, function) :: `Function`
+Change the bot nickname for the duration of the function. No-op on Discord.
 
 ---
 
@@ -96,8 +163,9 @@ Triggered when a plugin is loaded.
 #### 'pluginUnload' (path)
 Triggered when a plugin is unloaded.
 
-# Extended IRC Events
+# Chat Events
 
 #### 'pub' (nick, text, msg)
-Triggered when a message is sent on the bot's current channel. `nick` and `text` are strings,
-while `msg` is an object documented [here](https://node-irc.readthedocs.org/en/latest/API.html#%27raw%27).
+Triggered when a message is sent in a channel the bot is listening to. `nick` and `text` are
+strings. `msg` is the raw message object from the underlying adapter (IRC message or Discord
+Message object).

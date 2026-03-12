@@ -10,16 +10,16 @@ module.exports = function (core) {
 
         if (core.util.beginsIgnoreCase(text, trigger)) {
             var text = text.substring(trigger.length).trim();
-            core.irc.sayFmt(pleure, text);
+            core.chat.sayFmt(pleure, text);
         }
     }
 
     plugin.load = function () {
-        core.irc.on("pub", pubListener);
+        core.chat.on("pub", pubListener);
     };
 
     plugin.unload = function () {
-        core.irc.removeListener("pub", pubListener);
+        core.chat.removeListener("pub", pubListener);
     };
 
     return plugin;

@@ -17,10 +17,10 @@ module.exports = function (core) {
         if (core.util.beginsIgnoreCase(text, rollTrigger)) {
             var sides = parseInt(text.substring(rollTrigger.length));
             if (isNaN(sides) || sides < 2) {
-                core.irc.sayFmt("%s: $roll sides", nick);
+                core.chat.sayFmt("%s: $roll sides", nick);
             } else {
                 var result = _.random(1, sides);
-                core.irc.sayFmt("%s: rolled %s!", nick, result);
+                core.chat.sayFmt("%s: rolled %s!", nick, result);
             }
 
         } else if (core.util.beginsIgnoreCase(text, selectTrigger)) {
@@ -29,16 +29,16 @@ module.exports = function (core) {
                 return word.length === 0;
             });
             var index = _.random(words.length - 1);
-            core.irc.sayFmt("%s: selected %s!", nick, words[index]);
+            core.chat.sayFmt("%s: selected %s!", nick, words[index]);
         }
     }
 
     plugin.load = function () {
-        core.irc.on("pub", pubListener);
+        core.chat.on("pub", pubListener);
     };
 
     plugin.unload = function () {
-        core.irc.removeListener("pub", pubListener);
+        core.chat.removeListener("pub", pubListener);
     };
 
     return plugin;

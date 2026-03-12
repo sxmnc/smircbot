@@ -9,6 +9,13 @@ module.exports = {
         password: "********",
 
         debug: true,
+        adapter: "discord",
+        discord: {
+           token: "********",
+           guildId: "********",
+           channelId: "********",
+        },
+
     },
 
     translateApiKey: "********",

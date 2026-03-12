@@ -20,11 +20,11 @@ module.exports = function (core) {
                         for (channel in result.channels.channel){
                             if (result.channels.channel[channel].$.id == station){
                                 var lastPlay = result.channels.channel[channel].lastPlaying[0];
-                                core.irc.sayPub("http://somafm.com/play/" + station + " : now playing -> " + lastPlay);
+                                core.chat.sayPub("http://somafm.com/play/" + station + " : now playing -> " + lastPlay);
                                 return;
                             }
                         }
-                        core.irc.sayPub("no station `" + station + "` found.");
+                        core.chat.sayPub("no station `" + station + "` found.");
                     });
                 }
             });
@@ -32,11 +32,11 @@ module.exports = function (core) {
     }
 
     plugin.load = function () {
-        core.irc.on("pub", pubListener);
+        core.chat.on("pub", pubListener);
     };
 
     plugin.unload = function () {
-        core.irc.removeListener("pub", pubListener);
+        core.chat.removeListener("pub", pubListener);
     };
 
     return plugin;

@@ -24,10 +24,10 @@ module.exports = function (core) {
                     if (body[resultType] === "exact") {
                         var def = body.list[0].definition;
                         var example = body.list[0].example;
-                        core.irc.sayFmt("Definition: %s | ex: %s",
+                        core.chat.sayFmt("Definition: %s | ex: %s",
                                         def, example);
                     } else {
-                        core.irc.sayFmt("Term not found.");
+                        core.chat.sayFmt("Term not found.");
                     }
                 }
             });
@@ -35,11 +35,11 @@ module.exports = function (core) {
     }
 
     plugin.load = function () {
-        core.irc.on("pub", pubListener);
+        core.chat.on("pub", pubListener);
     };
 
     plugin.unload = function () {
-        core.irc.removeListener("pub", pubListener);
+        core.chat.removeListener("pub", pubListener);
     };
 
     return plugin;

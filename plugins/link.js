@@ -19,7 +19,7 @@ module.exports = function (core) {
                     if (!err && res.statusCode === 200) {
                         var result = /<title>\s*((?:.|\n)+?)\s*<\/title>/.exec(body);
                         if (result && result.length === 2 && result[1]) {
-                            core.irc.sayFmt("link: %s",
+                            core.chat.sayFmt("link: %s",
                                             entities.decodeHTML(result[1]));
                         }
                     }
@@ -40,7 +40,7 @@ module.exports = function (core) {
                         if (result[1] === "Login :: What.CD") {
                             whatCD(r, url);
                         } else {
-                            core.irc.sayFmt("link: %s",
+                            core.chat.sayFmt("link: %s",
                                             entities.decodeHTML(result[1]));
                         }
                     }
@@ -50,11 +50,11 @@ module.exports = function (core) {
     }
 
     plugin.load = function () {
-        core.irc.on("pub", pubListener);
+        core.chat.on("pub", pubListener);
     };
 
     plugin.unload = function () {
-        core.irc.removeListener("pub", pubListener);
+        core.chat.removeListener("pub", pubListener);
     };
 
     return plugin;

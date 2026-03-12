@@ -24,22 +24,22 @@ module.exports = function (core) {
                 json: true,
             }, function (err, response, body) {
                 if (body.main) {
-                    core.irc.sayFmt("[%s]: %s\u00b0C, %s",
+                    core.chat.sayFmt("[%s]: %s\u00b0C, %s",
                                     city, Math.round(body.main.temp),
                                     body.weather[0].description);
                 } else {
-                    core.irc.sayFmt("[%s]: City not found.", city);
+                    core.chat.sayFmt("[%s]: City not found.", city);
                 }
             });
         }
     }
 
     plugin.load = function () {
-        core.irc.on("pub", pubListener);
+        core.chat.on("pub", pubListener);
     };
 
     plugin.unload = function () {
-        core.irc.removeListener("pub", pubListener);
+        core.chat.removeListener("pub", pubListener);
     };
 
     return plugin;
